@@ -12,6 +12,7 @@ interface IUser {
     userName: string | null;
     email: string | null;
     password: string | null;
+    // token : string | null
   
 }
 
@@ -24,7 +25,8 @@ const initalState:IAuthState = {
     user : {
         userName : null,
         email : null,
-        password : null
+        password : null,
+        // token : null
     },status: Status.LOADING
 }
 
