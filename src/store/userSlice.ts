@@ -10,12 +10,12 @@ const userSlice = createSlice({
   name: "user",
   initialState : userInfo,
   reducers: {
-    setName(state:user,action:PayloadAction<user>){
-        state.name = "hahahaha"
+    setName(state:user,action:PayloadAction<string>){
+        state.name = action.payload
     }
   }
 });
 //action 
-const {} = userSlice.actions
+export const {setName} = userSlice.actions
 
 export default userSlice.reducer
