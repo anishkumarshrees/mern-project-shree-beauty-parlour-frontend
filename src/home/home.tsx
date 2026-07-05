@@ -11,9 +11,9 @@ function Home(){
     <section className="pt-20 md:pt-40">
       <div className="container mx-auto px-8 lg:flex">
         <div className="text-center lg:text-left lg:w-1/2">
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">Hamro Dokaan...</h1>
+          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">Shree Beauty Parlour</h1>
           <p className="text-xl lg:text-2xl mt-6 font-light">Visit our store to buy your
-            any household materials, products..
+            any beauty materials, products..
           </p>
           <p className="mt-8 md:mt-12">
             <button type="button" className=" py-4 px-12 bg-teal-500 hover:bg-teal-600 rounded text-white">Get Started</button>

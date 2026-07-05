@@ -5,22 +5,22 @@ import { useEffect, useState } from "react"
 
 
 function Navbar(){
-    // const reduxToken = useAppSelector((store)=>store.auth.user.token)
-    
-    const localStorageToken = localStorage.getItem("tokenHoYo")
+    const reduxToken = useAppSelector((store)=>store.auth.user.token)
+    // const {items} = useAppSelector((store)=>store.cart)
+    const localStorageToken = localStorage.getItem("thisistoken")
     const [isLoggedIn,setIsLoggedIn] = useState<boolean>(false)
     const dispatch = useAppDispatch()
 
-    // useEffect(()=>{
-    //     setIsLoggedIn(!!localStorageToken || !!reduxToken)
-    //     if(isLoggedIn){
-    //       dispatch(fetchCartItems())
-    //     }
-    //     // if(reduxToken && localStorageToken){
-    //     //     setIsLoggedIn(true)
-    //     // }
-    // },[isLoggedIn])
-    // console.log(isLoggedIn)
+    useEffect(()=>{
+        setIsLoggedIn(!!localStorageToken || !!reduxToken)
+        // if(isLoggedIn){
+        //   dispatch(fetchCartItems())
+        // }
+        // if(reduxToken && localStorageToken){
+        //     setIsLoggedIn(true)
+        // }
+    },[isLoggedIn])
+    console.log(isLoggedIn)
 
  return ( 
     <header className="sticky top-0 bg-white shadow">
@@ -34,43 +34,49 @@ function Navbar(){
             <path  fill="#3182CE" d="M36,22l-1-6l-18,7l17,7l-2-5l-8-2h12V22z M27.661,21l5.771-2.244L33.806,21H27.661z">
             </path>
           </svg>
-        </div>HDokaan..
+        </div>Shree Beauty Parlour....
       </div>
-      <div className="flex mt-4 sm:mt-0">
+      {/* <div className="flex mt-4 sm:mt-0">
         <Link className="px-4" to="/products">Products</Link>
         <Link className="px-4" to="/my-orders">My Orders</Link>
 
-      </div>
+      </div> */}
       
 
-      <div className="hidden md:block">
-        {
-            isLoggedIn ? (
-             <>
-             <span className="mr-[10px]"> <Link to='/my-cart'>Cart <sup></sup> </Link></span>
-                <Link to='/logout'>
-                <button type="button" className="mr-5 py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Logout
-                     </button>
-                </Link>
-             </>
-            )  : (
-                <>
-                <Link to='/register'>
-                <button type="button" className="mr-5 py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Register
-                     </button>
-                </Link>
-                <Link to='/login'>
-   <button type="button" className=" py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Login
+     <div className="flex flex-col gap-3 md:flex-row md:items-center">
+  {isLoggedIn ? (
+    <Link to="/logout">
+      <button
+        type="button"
+        className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
+      >
+        Logout
+      </button>
+    </Link>
+  ) : (
+    <>
+      <Link to="/register" className="w-full md:w-auto">
+        <button
+          type="button"
+          className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
+        >
+          Register
         </button>
-   </Link>
-    
-                
-                </>
-            )
-        }
+      </Link>
 
+      <Link to="/login" className="w-full md:w-auto">
+        <button
+          type="button"
+          className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
+        >
+          Login
+        </button>
+      </Link>
+    </>
+  )}
+</div>
       </div>
-    </div>
+    
   </header>
  )
 }
