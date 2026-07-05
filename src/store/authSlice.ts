@@ -9,7 +9,7 @@ interface IUserLogin{
 }
 interface IUser {
 
-    username: string | null;
+    userName: string | null;
     email: string | null;
     password: string | null;
   
@@ -22,9 +22,9 @@ interface IUser {
 
 const initalState:IAuthState = {
     user : {
-        username : "",
-        email : "",
-        password : ""
+        userName : null,
+        email : null,
+        password : null
     },status: Status.LOADING
 }
 
@@ -51,8 +51,9 @@ export function registerUser(data:IUser){
       try {
         const response = await axios.post("http://localhost:3000/api/register",data)
         console.log(response)
-        if(response.status === 200){
+        if(response.status === 201){
             dispatch(setStatus(Status.SUCCESS))
+            dispatch(setUser(response.data.data))
         }else{
             dispatch(setStatus(Status.ERROR))
         }
@@ -68,7 +69,7 @@ export function loginUser(data:IUserLogin){
       try {
         const response = await axios.post("http://localhost:3000/api/login",data)
         console.log(response)
-        if(response.status === 200){
+        if(response.status === 201){
             dispatch(setStatus(Status.SUCCESS))
         }else{
             dispatch(setStatus(Status.ERROR))
@@ -85,7 +86,7 @@ export function forgotPassword(data:{email : string}){
       try {
         const response = await axios.post("http://localhost:3000/api/forget-password",data)
         console.log(response)
-        if(response.status === 200){
+        if(response.status === 201){
             dispatch(setStatus(Status.SUCCESS))
         }else{
             dispatch(setStatus(Status.ERROR))

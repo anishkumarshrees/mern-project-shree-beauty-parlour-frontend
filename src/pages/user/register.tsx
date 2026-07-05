@@ -5,7 +5,7 @@ import { registerUser } from "../../store/authSlice";
 function Register() {
   const dispatch = useAppDispatch();
   const [data, setData] = useState({
-    username: "",
+    userName: "",
     password: "",
     email: "",
   });
@@ -16,10 +16,13 @@ function Register() {
       [name]: value,
     }));
   };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(registerUser(data));
-  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  console.log("Sending:", data);
+
+  dispatch(registerUser(data));
+};
   return (
     <>
       <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -45,10 +48,10 @@ function Register() {
                 </label>
                 <div className="mt-1">
                   <input
-                    name="username"
+                    name="userName"
                     type="text"
                     required
-                    value={data.username}
+                    value={data.userName}
                     className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                     onChange={handleChange}
                   />
