@@ -3,6 +3,7 @@ import Navbar from "../../globals/components/Navbar";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchProduct } from "../../store/productSlice";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../../store/cartSlice";
 
 function SingleProduct() {
   const { id } = useParams();
@@ -16,6 +17,13 @@ function SingleProduct() {
   }, [dispatch, id]);
 
   const stock = product?.productTotalStock ?? 0;
+
+  const handleAddToCart =()=>{
+    if (id) {
+      dispatch(addToCart(id))
+    }
+    
+  }
 
   return (
     <>
@@ -36,7 +44,7 @@ function SingleProduct() {
                 </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                  <button className="w-full sm:flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-semibold transition shadow-lg">
+                  <button className="w-full sm:flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-semibold transition shadow-lg" onClick={handleAddToCart}>
                     Add to Cart
                   </button>
 

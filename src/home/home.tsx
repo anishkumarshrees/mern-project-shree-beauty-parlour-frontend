@@ -19,7 +19,7 @@ function Home() {
         <section className="pt-16 md:pt-32">
           <div className="container mx-auto px-6 lg:flex items-center gap-12">
             <div className="text-center lg:text-left lg:w-1/2 py-8">
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold !text-pink-600 leading-none ">
                 Shree Beauty Parlour — Look & Feel Gorgeous
               </h1>
               <p className="text-xl lg:text-2xl mt-6 font-light text-gray-700">
@@ -27,13 +27,14 @@ function Home() {
                 personalised recommendations.
               </p>
               <div className="mt-8 md:mt-12 flex flex-col sm:flex-row sm:justify-start gap-3 sm:gap-4 items-center justify-center lg:justify-start">
-               
-               <Link to="/product"> <button
-                  type="button"
-                  className="py-3 px-8 bg-pink-500 hover:bg-pink-600 rounded text-white shadow-md hover:shadow-lg transition cursor-pointer"
-                >
-                  Shop Now
-                </button>
+                <Link to="/product">
+                  {" "}
+                  <button
+                    type="button"
+                    className="py-3 px-8 bg-pink-500 hover:bg-pink-600 rounded text-white shadow-md hover:shadow-lg transition cursor-pointer"
+                  >
+                    Shop Now
+                  </button>
                 </Link>
                 <Link
                   to="/contact"

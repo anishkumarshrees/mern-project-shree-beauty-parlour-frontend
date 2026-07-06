@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { Status } from "../globals/types/type";
-import axios from "axios";
+// import axios from "axios";
 // import { data } from "react-router-dom";
 import type { AppDispatch } from "./store";
 import { API } from "../http";
@@ -56,7 +56,7 @@ export default authSlice.reducer
 export function registerUser(data:IUser){
     return async function registerUserThunk(dispatch:AppDispatch){
       try {
-        const response = await API.post("/auth/register",data)
+        const response = await API.post("/register",data)
         console.log(response)
         if(response.status === 200){
             dispatch(setStatus(Status.SUCCESS))
