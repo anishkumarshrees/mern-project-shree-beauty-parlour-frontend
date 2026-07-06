@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import Navbar from "../../globals/components/Navbar";
 import Card from "./component/Card";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProduct } from "../../store/productSlice";
+import {  fetchProducts } from "../../store/productSlice";
 
 function Product() {
   const dispatch = useAppDispatch();
   const { products, status } = useAppSelector((store) => store.product);
   useEffect(() => {
-    dispatch(fetchProduct());
+    dispatch(fetchProducts());
   }, []);
 
   return (
@@ -27,9 +27,8 @@ function Product() {
       >
         {products.length > 0 &&
           products.map((product) => {
-            return <Card product={product} />;
+            return <Card key={product.id} product={product} />;
           })}
-          
       </section>
     </>
   );

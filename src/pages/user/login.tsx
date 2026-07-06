@@ -1,33 +1,41 @@
-import { loginUser } from "../../store/authSlice"
+import { loginUser } from "../../store/authSlice";
 
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { useState, type ChangeEvent } from "react"
-import { Link } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useState, useEffect, type ChangeEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login(){
-    const dispatch =useAppDispatch()
-    const {status,user} = useAppSelector((store)=>store.auth)
-    const [data,setData] =useState({
-        email : "",
-        password : ""
-    })
-    const hadnleChange = (e:ChangeEvent<HTMLInputElement
-        >)=>{
-        const {name, value} = e.target;
-        setData((prev)=>({
-            ...prev,
-            [name] : value
-        }))
-    };
-     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-    
-      console.log("Sending:", data);
-    
-      dispatch(loginUser(data));
-    };
+function Login() {
+  const dispatch = useAppDispatch();
+  const { status, user } = useAppSelector((store) => store.auth);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const hadnleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-   return(
+    console.log("Sending:", data);
+
+    dispatch(loginUser(data));
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = user?.token || localStorage.getItem("thisistoken");
+    if (token) {
+      navigate("/home");
+    }
+  }, [user?.token, navigate]);
+
+  return (
     <>
       <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
@@ -50,7 +58,6 @@ function Login(){
                 >
                   Username
                 </label>
-               
               </div>
 
               <div>
@@ -101,13 +108,15 @@ function Login(){
                   Login Account
                 </button>
               </div>
-                <p className="text-blue-500">Wanna Register? <Link to='/register'> Go to Register</Link></p>
+              <p className="text-blue-500">
+                Wanna Register? <Link to="/register"> Go to Register</Link>
+              </p>
             </form>
           </div>
         </div>
       </div>
     </>
-   )
+  );
 }
 
-export default Login
+export default Login;
