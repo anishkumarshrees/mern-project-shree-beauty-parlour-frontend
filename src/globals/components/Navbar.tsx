@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, Links } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { useEffect, useState } from "react"
 // import { fetchCartItems } from "../../store/cartSlice"
@@ -35,15 +35,23 @@ function Navbar(){
             </path>
           </svg>
         </div>Shree Beauty Parlour....
+        
       </div>
       {/* <div className="flex mt-4 sm:mt-0">
         <Link className="px-4" to="/products">Products</Link>
         <Link className="px-4" to="/my-orders">My Orders</Link>
 
       </div> */}
-      
+
+       
 
      <div className="flex flex-col gap-3 md:flex-row md:items-center">
+      <Link to="/product" className="w-full md:w-auto">
+       
+          Products
+       
+      </Link>
+      
   {isLoggedIn ? (
     <Link to="/logout">
       <button
