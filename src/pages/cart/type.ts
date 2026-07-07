@@ -8,6 +8,8 @@ export interface ICartProduct {
   productPrice: number;
 }
 
+
+
 export interface ICartItem {
   id: string;
   quantity: number;
@@ -24,3 +26,5 @@ export interface ICartUpdateItem{
     productId : string,
     quantity : number
 }
+
+

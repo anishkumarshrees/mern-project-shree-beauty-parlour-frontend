@@ -1,0 +1,50 @@
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { Status } from "../globals/types/type";
+import type { IData, IOrder, IOrderItems } from "../pages/checkOut/typse";
+// import { setStatus } from "./authSlice";
+import type { AppDispatch } from "./store";
+import { APIWITHTOKEN } from "../http";
+
+const innitialState: IOrder = {
+  status: Status.LOADING,
+  items: [],
+  khaltiUrl: null,
+};
+
+const orderSlice = createSlice({
+  name: "orders",
+  initialState: innitialState,
+  reducers: {
+    setItems(state: IOrder, action: PayloadAction<IOrderItems[]>) {
+      state.items = action.payload;
+    },
+    setStatus(state: IOrder, action: PayloadAction<Status>) {
+      state.status = action.payload;
+    },
+    setKhaltiUrl(state: IOrder, action: PayloadAction<string>) {
+      state.khaltiUrl = action.payload;
+    },
+  },
+});
+
+export default orderSlice.reducer;
+const { setItems, setStatus, setKhaltiUrl } = orderSlice.actions;
+
+export function orderItem(data: IData) {
+  return async function orderItemsThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.post("/order", data);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(setItems(response.data.data));
+        if (response.data.url) {
+          dispatch(setKhaltiUrl(response.data.url));
+        }
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
