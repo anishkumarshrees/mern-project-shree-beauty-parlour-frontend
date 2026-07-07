@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const dispatch = useAppDispatch();
-  const { status, user } = useAppSelector((store) => store.auth);
+  const { user } = useAppSelector((store) => store.auth);
   const [data, setData] = useState({
     email: "",
     password: "",

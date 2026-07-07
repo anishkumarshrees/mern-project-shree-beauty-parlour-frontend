@@ -6,7 +6,7 @@ import { Status } from "../../globals/types/type";
 
 function Register() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [data, setData] = useState({
     userName: "",
     password: "",
@@ -20,19 +20,19 @@ function Register() {
     }));
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  console.log("Sending:", data);
+    console.log("Sending:", data);
 
-  dispatch(registerUser(data));
-};
- useEffect(()=>{
-        if(status === Status.SUCCESS){
-            navigate("/login")
-        }else if (status === Status.ERROR){
-            alert("Something went wrong")
-        }
-    },[status])
+    dispatch(registerUser(data));
+  };
+  useEffect(() => {
+    if (status === Status.SUCCESS) {
+      navigate("/login");
+    } else if (status === Status.ERROR) {
+      alert("Something went wrong");
+    }
+  }, [status]);
   return (
     <>
       <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">

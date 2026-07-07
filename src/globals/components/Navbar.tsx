@@ -1,29 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setUser } from "../../store/authSlice";
 import { fetchCartItems } from "../../store/cartSlice";
-// import { fetchCartItems } from "../../store/cartSlice"
 
 function Navbar() {
   const reduxToken = useAppSelector((store) => store.auth.user.token);
-  const {items} = useAppSelector((store)=>store.cart)
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { items } = useAppSelector((store) => store.cart);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = Boolean(reduxToken || localStorage.getItem("thisistoken"));
 
   useEffect(() => {
-    const localToken = localStorage.getItem("thisistoken");
-    setIsLoggedIn(!!localToken || !!reduxToken);
-  }, [reduxToken]);
-  console.log(isLoggedIn);
-
-  useEffect(()=>{
-    setIsLoggedIn(!!localStorage || !!reduxToken)
-    if(isLoggedIn){
-      dispatch(fetchCartItems())
+    if (reduxToken) {
+      dispatch(fetchCartItems());
     }
-  },[isLoggedIn])
+  }, [dispatch, reduxToken]);
 
   return (
     <header className="sticky top-0 bg-white shadow">
@@ -52,39 +44,38 @@ function Navbar() {
         <Link className="px-4" to="/my-orders">My Orders</Link>
 
       </div> */}
-      <Link to="/product" className="w-full md:w-auto">
-            Products
-          </Link>
-
+        <Link to="/product" className="w-full md:w-auto">
+          Products
+        </Link>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          
-
           {isLoggedIn ? (
             <>
               <span className="mr-3">
-        <Link to="/my-cart">Cart<sup>{items.length > 0 ? items.length: 0}</sup></Link>
-      </span>
-            <button
-              type="button"
-              onClick={() => {
-                localStorage.removeItem("thisistoken");
-                dispatch(
-                  setUser({
-                    userName: null,
-                    email: null,
-                    password: null,
-                    token: null,
-                  }),
-                );
-                setIsLoggedIn(false);
-                navigate("/home");
-              }}
-              className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
-            >
-              Logout
-            </button>
-        </>  ) : (
+                <Link to="/my-cart">
+                  Cart<sup>{items.length > 0 ? items.length : 0}</sup>
+                </Link>
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem("thisistoken");
+                  dispatch(
+                    setUser({
+                      userName: null,
+                      email: null,
+                      password: null,
+                      token: null,
+                    }),
+                  );
+                  navigate("/home", { replace: true });
+                }}
+                className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
             <>
               <Link to="/register" className="w-full md:w-auto">
                 <button

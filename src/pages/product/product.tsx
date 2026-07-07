@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Navbar from "../../globals/components/Navbar";
 import Card from "./component/Card";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {  fetchProducts } from "../../store/productSlice";
+import { fetchProducts } from "../../store/productSlice";
 
 function Product() {
   const dispatch = useAppDispatch();
