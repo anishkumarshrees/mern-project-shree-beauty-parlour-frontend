@@ -1,13 +1,20 @@
 import type { Status } from "../../globals/types/type";
+import type { ICartProduct } from "../cart/type";
 
 
 interface IProduct{
   productId : string,
-  productQty : number
+  productQty : number,
+  orderStatus? : string,
+  totalAmount? : number,
+  Payment? : {
+    paymentMethod : PaymentMethod
+  }
+  productName? : string
 }
 export interface IOrderItems extends IProduct{
    
-    orderId : string
+    id : string
 }
 
 
