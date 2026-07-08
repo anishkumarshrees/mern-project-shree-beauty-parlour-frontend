@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { Status } from "../globals/types/type";
 import type { IData, IOrder, IOrderItems } from "../pages/checkOut/typse";
+import { OrderStatus, type IOrderDetails, type IOrderInfo } from "../pages/my-order-details/type";
 // import { setStatus } from "./authSlice";
 import type { AppDispatch } from "./store";
 import { APIWITHTOKEN } from "../http";
@@ -9,7 +10,8 @@ const innitialState: IOrder = {
   status: Status.LOADING,
   items: [],
   khaltiUrl: null,
-  orderDetails : []
+  orderDetails : [],
+  order : null
 };
 
 const orderSlice = createSlice({
@@ -19,8 +21,8 @@ const orderSlice = createSlice({
     setItems(state: IOrder, action: PayloadAction<IOrderItems[]>) {
       state.items = action.payload;
     },
-    setorderDetails(state: IOrder, action: PayloadAction<IOrderItems[]>) {
-      state.items = action.payload;
+    setorderDetails(state: IOrder, action: PayloadAction<IOrderDetails[]>) {
+      state.orderDetails = action.payload;
     },
     setStatus(state: IOrder, action: PayloadAction<Status>) {
       state.status = action.payload;
@@ -28,12 +30,32 @@ const orderSlice = createSlice({
     setKhaltiUrl(state: IOrder, action: PayloadAction<string>) {
       state.khaltiUrl = action.payload;
     },
+   updateOrderStatusToCancel(
+  state: IOrder,
+  action: PayloadAction<{ orderId: string }>
+) {
+  const orderId = action.payload.orderId;
+
+  state.items = state.items.map((item) =>
+    item.orderId === orderId
+      ? { ...item, orderStatus: OrderStatus.Cancelled }
+      : item
+  );
+
+  // ⭐ Update the currently opened order
+  if (state.order && state.order.id === orderId) {
+    state.order.orderStatus = OrderStatus.Cancelled;
+  }
+},
+    setOrder(state: IOrder, action: PayloadAction<IOrderInfo>) {
+  state.order = action.payload;
+},
     
   },
 });
 
 export default orderSlice.reducer;
-const { setItems, setStatus, setKhaltiUrl,setorderDetails} = orderSlice.actions;
+const { setItems, setStatus, setKhaltiUrl,setorderDetails,updateOrderStatusToCancel,setOrder} = orderSlice.actions;
 
 export function orderItem(data: IData) {
   return async function orderItemsThunk(dispatch: AppDispatch) {
@@ -74,10 +96,32 @@ export function fetchMyOrdersDetails(id:string){
   return async function fetchMyOrdersDetailsThunk(dispatch:AppDispatch){
     try {
        const response = await APIWITHTOKEN.get("/order/" + id);
+       console.log("Entire Response:", response.data);
+      console.log("Order Object:", response.data.order);
         console.log("API Response:", response.data);
        if(response.status ===200){
       dispatch(setStatus(Status.SUCCESS));
-        dispatch(setorderDetails(response.data.data));
+        dispatch(setOrder(response.data.order));
+dispatch(setorderDetails(response.data.data));
+       }else{
+        dispatch(setStatus(Status.ERROR));
+       }
+    } catch (error) {
+      dispatch(setStatus(Status.ERROR));
+    }
+  }
+}
+export function cancelOrderAPI(id:string){
+  return async function cancelOrderAPIThunk(dispatch:AppDispatch){
+    try {
+       const response = await APIWITHTOKEN.patch("/order/cancel-order/" + id);
+        console.log("API Response:", response.data);
+        console.log(response.data);
+       if(response.status ===200){
+      dispatch(setStatus(Status.SUCCESS));
+        dispatch(updateOrderStatusToCancel({
+          orderId : id
+        }));
        }else{
         dispatch(setStatus(Status.ERROR));
        }

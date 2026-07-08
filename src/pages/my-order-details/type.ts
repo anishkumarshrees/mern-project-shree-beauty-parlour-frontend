@@ -11,30 +11,35 @@ export enum  PaymentStatus{
     Paid = 'paid',
     Unpaid = 'unpaid'
 }
+export interface IOrderInfo {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    addressLine: string;
+    city: string;
+    state: string;
+    totalAmount: number;
+    orderStatus: OrderStatus;
+    userId: string;
+    Payment: {
+        paymentMethod: PaymentMethod;
+        paymentStatus: PaymentStatus;
+    };
+}
 
 export interface IOrderDetails {
-    id : string,
-    quantitiy : number,
-    createdAt : string,
-    orderId : string,
-    productId : string,
-    Order : {
-        orderStatus : OrderStatus,
-        addressLine : string,
-        city : string,
-        state : string,
-        totalAmount : number,
-        phoneNumber : number,
-        Payment : {
-            paymentMethod : PaymentMethod,
-            paymentStatus : PaymentStatus
-        }
-
-    },
-    Product : {
+    id: string,
+    quantity: number,
+    createdAt: string,  
+    orderId: string,
+    productId: string,
+    
+    product : {
         productImage : string,
         productName : string,
-        productPrice : string,
+        productPrice : number,
         Category :{
             categoryName : string
         }

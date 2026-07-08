@@ -6,7 +6,7 @@ import { fetchProducts } from "../../store/productSlice";
 
 function Product() {
   const dispatch = useAppDispatch();
-  const { products, status } = useAppSelector((store) => store.product);
+  const { products } = useAppSelector((store) => store.product);
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);

@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { registerUser } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Status } from "../../globals/types/type";
@@ -7,19 +7,20 @@ import { Status } from "../../globals/types/type";
 function Register() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { status } = useAppSelector((store) => store.auth);
   const [data, setData] = useState({
     userName: "",
     password: "",
     email: "",
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.currentTarget;
     setData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log("Sending:", data);
@@ -32,7 +33,7 @@ function Register() {
     } else if (status === Status.ERROR) {
       alert("Something went wrong");
     }
-  }, [status]);
+  }, [navigate, status]);
   return (
     <>
       <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">

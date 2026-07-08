@@ -12,7 +12,7 @@ function Login() {
     password: "",
   });
   const hadnleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.currentTarget;
     setData((prev) => ({
       ...prev,
       [name]: value,
