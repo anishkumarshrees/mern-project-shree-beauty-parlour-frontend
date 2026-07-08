@@ -1,5 +1,5 @@
 import type { Status } from "../../globals/types/type";
-import type { IProduct } from "../product/types";
+// import type { IProduct } from "../product/types";
 
 export interface ICartProduct {
   id: string;

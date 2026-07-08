@@ -9,6 +9,7 @@ const innitialState: IOrder = {
   status: Status.LOADING,
   items: [],
   khaltiUrl: null,
+  orderDetails : []
 };
 
 const orderSlice = createSlice({
@@ -18,17 +19,21 @@ const orderSlice = createSlice({
     setItems(state: IOrder, action: PayloadAction<IOrderItems[]>) {
       state.items = action.payload;
     },
+    setorderDetails(state: IOrder, action: PayloadAction<IOrderItems[]>) {
+      state.items = action.payload;
+    },
     setStatus(state: IOrder, action: PayloadAction<Status>) {
       state.status = action.payload;
     },
     setKhaltiUrl(state: IOrder, action: PayloadAction<string>) {
       state.khaltiUrl = action.payload;
     },
+    
   },
 });
 
 export default orderSlice.reducer;
-const { setItems, setStatus, setKhaltiUrl } = orderSlice.actions;
+const { setItems, setStatus, setKhaltiUrl,setorderDetails} = orderSlice.actions;
 
 export function orderItem(data: IData) {
   return async function orderItemsThunk(dispatch: AppDispatch) {
@@ -69,9 +74,10 @@ export function fetchMyOrdersDetails(id:string){
   return async function fetchMyOrdersDetailsThunk(dispatch:AppDispatch){
     try {
        const response = await APIWITHTOKEN.get("/order/" + id);
+        console.log("API Response:", response.data);
        if(response.status ===200){
       dispatch(setStatus(Status.SUCCESS));
-        dispatch(setItems(response.data.data));
+        dispatch(setorderDetails(response.data.data));
        }else{
         dispatch(setStatus(Status.ERROR));
        }
