@@ -37,7 +37,8 @@ function Navbar() {
               ></path>
             </svg>
           </div>
-          Shree Beauty Parlour....
+          <Link to="/home">
+          Shree Beauty Parlour....</Link>
         </div>
         {/* <div className="flex mt-4 sm:mt-0">
         <Link className="px-4" to="/products">Products</Link>
@@ -46,6 +47,9 @@ function Navbar() {
       </div> */}
         <Link to="/product" className="w-full md:w-auto">
           Products
+        </Link>
+        <Link to="/my-order" className="w-full md:w-auto">
+          My Orders
         </Link>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center">

@@ -625,6 +625,10 @@ function Home() {
                     </div>
                     <h3 className="font-semibold">{p.productName}</h3>
                     <p className="text-pink-600 mt-2">₹{p.productPrice}</p>
+                    <p className="text-pink-600 mt-2">{p.productDescription}</p>
+                    <p className="text-pink-600 mt-2">
+                      Total Stock : {p.productTotalStock}
+                    </p>
                   </Link>
                 ))
               ) : (

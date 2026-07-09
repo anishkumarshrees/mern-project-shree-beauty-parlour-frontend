@@ -12,6 +12,11 @@ import MyCart from "./pages/cart/my-cart";
 import CheckOut from "./pages/checkOut/CheckOut";
 import MyOrder from "./pages/my-orders/MyOrder";
 import MyOrderDetails from "./pages/my-order-details/MyorderDetails";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Categories from "./pages/admin/categories/Categories";
+import AdminStats from "./pages/admin/stats/AdminStats";
+// import AdminIndex from "./pages/admin/Layout";
+
 function App() {
   return (
     <>
@@ -28,6 +33,8 @@ function App() {
             <Route path="/my-checkout" element={<CheckOut />} />
             <Route path="/my-order" element={<MyOrder />} />
             <Route path="/my-order/:id" element={<MyOrderDetails />} />
+            <Route path="/admin" element={<AdminStats />} />
+             <Route path="/admin/categories" element={<Categories />} />
           </Routes>
         </BrowserRouter>
       </Provider>
