@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../AdminLayout";
 import CategoryTable from "./components/Table";
-import axios from "axios";
+// import axios from "axios";
 import { API } from "../../../http";
+import { fetchCategoryItems } from "../../../store/adminCategorySlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 
 export interface ICategory{
@@ -10,24 +12,25 @@ export interface ICategory{
     categoryName : string
 }
 function Categories() {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  // const [categories, setCategories] = useState<ICategory[]>([]);
 
-  const fetchCategories = async () => {
-    try {
-      const response = await API.get("/category");
+  // const fetchCategories = async () => {
+  //   try {
+  //     const response = await API.get("/category");
 
-      if (response.status === 200) {
-        setCategories(response.data.data);
-      } else {
-        alert("Something went wrong");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  //     if (response.status === 200) {
+  //       setCategories(response.data.data);
+  //     } else {
+  //       alert("Something went wrong");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+const dispatch = useAppDispatch()
+const {items:categories} = useAppSelector((store)=>store.categories)
   useEffect(() => {
-    fetchCategories();
+   dispatch( fetchCategoryItems());
   }, []);
 
   return (
