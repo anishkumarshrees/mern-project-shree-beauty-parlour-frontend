@@ -15,9 +15,11 @@ import MyOrderDetails from "./pages/my-order-details/MyorderDetails";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Categories from "./pages/admin/categories/Categories";
 import AdminStats from "./pages/admin/stats/AdminStats";
+import axios from "axios";
 // import AdminIndex from "./pages/admin/Layout";
 
 function App() {
+  
   return (
     <>
       <Provider store={store}>
