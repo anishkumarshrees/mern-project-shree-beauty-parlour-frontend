@@ -31,6 +31,9 @@ const adminCategorySlice = createSlice({
     setStatus(state: ICategoryInitialState, action: PayloadAction<Status>) {
       state.status = action.payload;
     },
+    addCategoryToItems(state:ICategoryInitialState,action:PayloadAction<ICategory>){
+state.items.push(action.payload)
+    },
    
     setDeleteCategoryItem(state:ICategoryInitialState , action: PayloadAction<string>) {
       const index = state.items.findIndex(
@@ -40,10 +43,13 @@ const adminCategorySlice = createSlice({
         state.items.splice(index, 1);
       }
     },
+    resetStatus(state:ICategoryInitialState){
+      state.status = Status.LOADING;
+    }
   },
 });
 
-export const { setItems, setStatus,  setDeleteCategoryItem } =
+export const { setItems, setStatus,  setDeleteCategoryItem,addCategoryToItems,resetStatus } =
   adminCategorySlice.actions;
 
 
@@ -57,7 +63,7 @@ export function addToCategory(categoryName: string) {
       });
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
-        dispatch(setItems(response.data.data));
+        dispatch(addCategoryToItems(response.data.data));
       } else {
         dispatch(setStatus(Status.ERROR));
       }

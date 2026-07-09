@@ -4,7 +4,7 @@ import { APIWITHTOKEN } from "../../../../http"
 import { useAppDispatch } from "../../../../store/hooks"
 import { handleCartItemDelete } from "../../../../store/cartSlice"
 import { handleCategoryItemDelete } from "../../../../store/adminCategorySlice"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import Modal from "./Model"
 
 
@@ -26,8 +26,8 @@ function CategoryTable({categories}:{categories : ICategory[]}){
     id && dispatch(handleCategoryItemDelete(id))
   }
  const filterCategories =  categories.filter((category)=>category.categoryName.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || category.id.includes(searchTerm))
- const openModal = ()=>setIsModalOpen(true)
- const closeModal = ()=>setIsModalOpen(false)
+ const openModal = useCallback(()=>setIsModalOpen(true),[])
+ const closeModal =useCallback( ()=>setIsModalOpen(false),[])
     return(
             <div className="flex flex-col">
   <div className=" overflow-x-auto">
@@ -60,7 +60,7 @@ function CategoryTable({categories}:{categories : ICategory[]}){
            {
             filterCategories.length > 0 && filterCategories.map((category)=>{
                 return(
-                     <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
+                     <tr key={category.id} className="bg-white transition-all duration-500 hover:bg-gray-50">
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 "> {category.categoryName}</td>
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"> {category.id} </td>
              
@@ -81,6 +81,7 @@ function CategoryTable({categories}:{categories : ICategory[]}){
                 </div>
               </td>
             </tr>
+            
                 )
             })
            }

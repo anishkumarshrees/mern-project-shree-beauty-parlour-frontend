@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks"
-import { addToCategory } from "../../../../store/adminCategorySlice"
+import { addToCategory, resetStatus } from "../../../../store/adminCategorySlice"
 import { Status } from "../../../../globals/types/type"
 
 interface ModalProps{
@@ -21,17 +21,22 @@ const Modal:React.FC<ModalProps>=({closeModal} : ModalProps)=>
         try {
             dispatch(addToCategory(categoryName))
         } catch (error) {
-            console.log(error)
-        }finally{
- setLoading(false)
-            closeModal()
-        }
-        if(status === Status.SUCCESS){
-           
-        }
+            console.log(error)}
 
-    }
-
+//         }finally{
+//  setLoading(false)
+//             closeModal()
+//         }
+//     }
+    
+  }
+  useEffect(()=>{
+      if(status === Status.SUCCESS){
+        setLoading(false)
+        closeModal()
+        dispatch(resetStatus())
+      }return
+    },[status])
 
     return(
       <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center">
