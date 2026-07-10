@@ -15,7 +15,7 @@ export interface IProduct {
   productImage: string;
   createdAt: string;
   updatedAt: string;
-  CategoryId: string;
+  categoryId: string;
   Category: ICategory;
 }
 
