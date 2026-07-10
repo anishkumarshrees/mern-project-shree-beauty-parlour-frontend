@@ -16,6 +16,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import Categories from "./pages/admin/categories/Categories";
 import AdminStats from "./pages/admin/stats/AdminStats";
 import axios from "axios";
+import User from "./pages/admin/users/Users";
 // import AdminIndex from "./pages/admin/Layout";
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
             <Route path="/my-order/:id" element={<MyOrderDetails />} />
             <Route path="/admin" element={<AdminStats />} />
              <Route path="/admin/categories" element={<Categories />} />
+          
+          <Route path="/admin/users" element={<User />} />
           </Routes>
         </BrowserRouter>
       </Provider>
