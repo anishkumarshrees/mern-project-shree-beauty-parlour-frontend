@@ -1,44 +1,51 @@
+
+
+// import { useParams } from "react-router-dom";
+// import Navbar from "../../globals/components/Navbar";
+
+// import { useAppDispatch, useAppSelector } from "../../store/hooks";
+// import { useEffect } from "react";
+// import {
+//   cancelOrderAPI,
+//   fetchMyOrdersDetails,
+// } from "../../store/checkOutSlice";
+// // import { OrderStatus } from "./types";
+
+// import { OrderStatus } from "./type";
 import { useParams } from "react-router-dom";
-import Navbar from "../../globals/components/Navbar";
-
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import AdminLayout from "../AdminLayout";
 import { useEffect } from "react";
-import {
-  cancelOrderAPI,
-  fetchMyOrdersDetails,
-} from "../../store/checkOutSlice";
+import { fetchAdminOrderDetail } from "../../../store/adminOrderSlice";
 
-
-import { OrderStatus } from "./type";
-
-function MyOrderDetail() {
+function AdminOrderDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
- const { order, orderDetails,items } = useAppSelector((store) => store.orders);
-const [data] = items.filter((order)=>order.id === id)
-console.log("ORDER =", order);
-console.log("ORDER DETAILS =", orderDetails);
+ const { orderDetails, order } = useAppSelector((store) => store.adminOrder);
+// const [data] = items.filter((order)=>order.id === id)
+
   // const [data] = items.filter((order)=>order.id === id)
   // const orderId = orderDetails[0].orderId
   // console.log(orderDetails, "ITEMS");
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchMyOrdersDetails(id));
+      dispatch(fetchAdminOrderDetail(id));
     }
-  }, []);
+  },[dispatch,id]);
 
-  const cancelOrder = () => {
-    if (id) {
-      dispatch(cancelOrderAPI(id));
-    }
-  };
-  console.log(orderDetails[0]);
+//   const cancelOrder = () => {
+//     if (id) {
+//       dispatch(cancelOrderAPI(id));
+//     }
+//   };
+//   console.log(orderDetails[0]);
   
   return (
     <>
-      <Navbar />
-      <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+     
+      <AdminLayout>
+        <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
         <div className="flex justify-start item-start space-y-2 flex-col">
           <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
             Order #{orderDetails[0]?.orderId}
@@ -46,7 +53,7 @@ console.log("ORDER DETAILS =", orderDetails);
           <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
             {new Date(orderDetails[0]?.createdAt).toLocaleDateString()}
           </p>
-          <p>Order Status : {order?.orderStatus}</p>
+          <p>Order Status : {orderDetails[0]?.order?.orderStatus}</p>
           
         </div>
         <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
@@ -110,7 +117,7 @@ console.log("ORDER DETAILS =", orderDetails);
                     Total
                   </p>
                   <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                    Rs. {order?.totalAmount}
+                    Rs. {}
                   </p>
                 </div>
               </div>
@@ -129,7 +136,7 @@ console.log("ORDER DETAILS =", orderDetails);
                     </div>
                     <div className="flex flex-col justify-start items-center">
                       <p className="text-lg leading-6 dark:text-white font-semibold text-gray-800">
-                        DPD Delivery
+                        Shree Beauty Parlour Delivery
                         <br />
                         <span className="font-normal">
                           Delivery with 24 Hours
@@ -177,8 +184,8 @@ console.log("ORDER DETAILS =", orderDetails);
                     </p>
                   </div>
                 </div>
-                <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                  {order?.orderStatus !== OrderStatus?.Cancelled && (
+                {/* <div className="flex w-full justify-center items-center md:justify-start md:items-start">
+                  {orderDetails[0]?.order.orderStatus !== orderStatus?.Cancelled && (
                       
                     <button
                       onClick={cancelOrder}
@@ -187,14 +194,15 @@ console.log("ORDER DETAILS =", orderDetails);
                       Cancel Order
                     </button>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
+      </AdminLayout>
     </>
   );
 }
 
-export default MyOrderDetail;
+export default AdminOrderDetails;

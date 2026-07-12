@@ -12,13 +12,15 @@ import MyCart from "./pages/cart/my-cart";
 import CheckOut from "./pages/checkOut/CheckOut";
 import MyOrder from "./pages/my-orders/MyOrder";
 import MyOrderDetails from "./pages/my-order-details/MyorderDetails";
-import AdminLayout from "./pages/admin/AdminLayout";
+// import AdminLayout from "./pages/admin/AdminLayout";
 import Categories from "./pages/admin/categories/Categories";
 import AdminStats from "./pages/admin/stats/AdminStats";
-import axios from "axios";
+// import axios from "axios";
 import User from "./pages/admin/users/Users";
 import AdminProduct from "./pages/admin/products/Product";
 import ProductDescription from "./pages/admin/productDesctiption/ProductDescription";
+import AdminOrder from "./pages/admin/order/AdminOrder";
+import AdminOrderDetails from "./pages/admin/order-details/AdminOrderDetails";
 // import AdminIndex from "./pages/admin/Layout";
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/product" element={<Product />} />
-            <Route path="/product/:id" element={<SingleProduct />} />{" "}
+            {/* <Route path="/product/:id" element={<SingleProduct />} />{" "} */}
             <Route path="/product/:id" element={<SingleProduct />} />
             <Route path="/my-cart" element={<MyCart />} />
             <Route path="/my-checkout" element={<CheckOut />} />
@@ -44,6 +46,8 @@ function App() {
           <Route path="/admin/users" element={<User />} />
           <Route path="/admin/product" element={<AdminProduct />} />
            <Route path="/admin/product/:id" element={<ProductDescription />} />
+            <Route path="/admin/orders" element={<AdminOrder />} />
+             <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
           </Routes>
         </BrowserRouter>
       </Provider>

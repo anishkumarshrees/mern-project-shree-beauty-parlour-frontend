@@ -32,16 +32,33 @@ export interface IOrderInfo {
 export interface IOrderDetails {
     id: string,
     quantity: number,
-    createdAt: string,  
+    createdAt: string,
+    
     orderId: string,
     productId: string,
-    
-    product : {
-        productImage : string,
-        productName : string,
-        productPrice : number,
-        Category :{
-            categoryName : string
+    order: {
+        orderStatus: OrderStatus,
+        addressLine: string,
+        city: string,
+        state: string,
+        totalAmount: number,
+        phoneNumber: string,
+        firstName : string, 
+        lastName : string, 
+        userId : string,
+        Payment: {
+            paymentMethod: PaymentMethod,
+            paymentStatus: PaymentStatus
+        }
+    },
+    product: {
+        productImage: string,
+        productName: string,
+        productPrice: number,
+        Category: {
+       
+            categoryName: string,
+      
         }
     }
 }
