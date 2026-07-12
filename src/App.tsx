@@ -18,6 +18,7 @@ import AdminStats from "./pages/admin/stats/AdminStats";
 import axios from "axios";
 import User from "./pages/admin/users/Users";
 import AdminProduct from "./pages/admin/products/Product";
+import ProductDescription from "./pages/admin/productDesctiption/ProductDescription";
 // import AdminIndex from "./pages/admin/Layout";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           
           <Route path="/admin/users" element={<User />} />
           <Route path="/admin/product" element={<AdminProduct />} />
+           <Route path="/admin/product/:id" element={<ProductDescription />} />
           </Routes>
         </BrowserRouter>
       </Provider>

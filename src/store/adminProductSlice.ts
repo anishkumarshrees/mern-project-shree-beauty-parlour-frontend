@@ -1,7 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { Status } from "../globals/types/type";
-import type { AppDispatch } from "./store";
-import { APIWITHTOKEN } from "../http";
+import type { AppDispatch, RootState } from "./store";
+import { API, APIWITHTOKEN } from "../http";
+
 
 
 export interface IProductAdmin {
@@ -18,8 +19,12 @@ export interface IProductAdmin {
     categoryName: string;
   };
 }
-
+interface IProduct{
+    id : string,
+    categoryName : string
+}
 export interface ICreateProductPayload {
+  id:string,
   productName: string;
   productPrice: number;
   productTotalStock: number;
@@ -33,11 +38,13 @@ interface IInitalState {
   products: IProductAdmin[];
   status: Status;
   product: null | IProductAdmin;
+  items : IProduct[]
 }
 const initialState: IInitalState = {
   products: [],
   status: Status.LOADING,
   product: null,
+  items : []
 };
 
 const productSlice = createSlice({
@@ -59,10 +66,24 @@ const productSlice = createSlice({
     ) {
       state.products.push(action.payload);
     },
+     deleteToProducts(state:IInitalState , action: PayloadAction<string>) {
+           const index = state.products.findIndex(
+             (item) => item.id === action.payload,
+           );
+           if (index !== -1) {
+             state.products.splice(index, 1);
+           }
+         },
+         productStatus(state:IInitalState){
+           state.status = Status.LOADING;
+         },
+         setProduct(state: IInitalState, action: PayloadAction<IProductAdmin | null>) {
+               state.product = action.payload;
+             },
   },
 });
 
-export const { setStatus, setProducts, resetStatus, addProductToProducts } =
+export const { setStatus, setProducts, resetStatus, addProductToProducts,deleteToProducts,setProduct } =
   productSlice.actions;
 export default productSlice.reducer;
 
@@ -109,5 +130,50 @@ export function addProducts(data: ICreateProductPayload) {
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
     }
+  };
+}
+
+export function deleteProducts(productId : string) {
+  return async function deleteProductsThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.delete("/product/" + productId);
+      console.log("fetchProducts response:", response.data);
+      if (response.status >= 200 && response.status < 300) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(deleteToProducts(productId));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
+
+export function fetchProductAdmin(id: string) {
+    
+  return async function fetchProductAdminThunk(dispatch: AppDispatch,getState:()=>RootState) {
+   const store = getState()
+  const productExists = store.adminProducts.products.find((product:IProductAdmin)=>product.id === id)
+  if(productExists){
+    dispatch(setProduct(productExists))
+    dispatch(setStatus(Status.SUCCESS))
+  }
+  else{
+ try {
+      const response = await API.get("/product/" + id);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        const data = response.data.data;
+        dispatch(setProduct(Array.isArray(data) ? (data[0] ?? null) : data));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      dispatch(setStatus(Status.ERROR));
+      console.error(error);
+    }
+  }
+   
   };
 }
