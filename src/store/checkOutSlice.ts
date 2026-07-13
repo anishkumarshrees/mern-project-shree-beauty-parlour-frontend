@@ -50,17 +50,22 @@ const orderSlice = createSlice({
     setOrder(state: IOrder, action: PayloadAction<IOrderInfo>) {
   state.order = action.payload;
 },
+updateOrderStatusSlice(state:IOrder,action:PayloadAction<{status:OrderStatus,userId:string,orderId:string}>){
+  const {status,orderId} = action.payload
+ const updateOrder = state.items.map((order)=>order.id === orderId ? {...order, orderStatus : status} : order)
+ state.items= updateOrder
+}
     
   },
 });
 
 export default orderSlice.reducer;
-const { setItems, setStatus, setKhaltiUrl,setorderDetails,updateOrderStatusToCancel,setOrder} = orderSlice.actions;
+export const { setItems, setStatus, setKhaltiUrl,setorderDetails,updateOrderStatusToCancel,setOrder,updateOrderStatusSlice} = orderSlice.actions;
 
 export function orderItem(data: IData) {
   return async function orderItemsThunk(dispatch: AppDispatch) {
     try {
-      const response = await APIWITHTOKEN.post("/order", data);
+      const response = await APIWITHTOKEN.post("/orders", data);
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setItems(response.data.data));
@@ -80,7 +85,7 @@ export function orderItem(data: IData) {
 export function fetchMyOrders(){
   return async function fetchMyOrdersThunk(dispatch:AppDispatch){
     try {
-       const response = await APIWITHTOKEN.get("/order");
+       const response = await APIWITHTOKEN.get("/orders");
        if(response.status ===200){
       dispatch(setStatus(Status.SUCCESS));
         dispatch(setItems(response.data.data));
@@ -95,13 +100,12 @@ export function fetchMyOrders(){
 export function fetchMyOrdersDetails(id:string){
   return async function fetchMyOrdersDetailsThunk(dispatch:AppDispatch){
     try {
-       const response = await APIWITHTOKEN.get("/order/" + id);
-       console.log("Entire Response:", response.data);
-      console.log("Order Object:", response.data.order);
+       const response = await APIWITHTOKEN.get("/orders/" + id);
+      
         console.log("API Response:", response.data);
        if(response.status ===200){
       dispatch(setStatus(Status.SUCCESS));
-        dispatch(setOrder(response.data.order));
+        // dispatch(setOrder(response.data.order));
 dispatch(setorderDetails(response.data.data));
        }else{
         dispatch(setStatus(Status.ERROR));
@@ -114,7 +118,7 @@ dispatch(setorderDetails(response.data.data));
 export function cancelOrderAPI(id:string){
   return async function cancelOrderAPIThunk(dispatch:AppDispatch){
     try {
-       const response = await APIWITHTOKEN.patch("/order/cancel-order/" + id);
+       const response = await APIWITHTOKEN.patch("/orders/cancel-order/" + id);
         console.log("API Response:", response.data);
         console.log(response.data);
        if(response.status ===200){

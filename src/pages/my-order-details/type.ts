@@ -3,7 +3,7 @@ import type { PaymentMethod } from "../checkOut/typse"
 export enum OrderStatus{
     preparation = "preparation",
     ontheway = "On the way",
-    Delivered = " Delivered",
+    Delivered = "Delivered",
     Pending = "Pending",
     Cancelled = "Cancelled"
 }

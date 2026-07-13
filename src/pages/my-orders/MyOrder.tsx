@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../globals/components/Navbar";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchMyOrders } from "../../store/checkOutSlice";
+import { fetchMyOrders, updateOrderStatusSlice } from "../../store/checkOutSlice";
+import { socket } from "../../App";
 
 function MyOrder() {
   const dispatch = useAppDispatch();
@@ -15,10 +16,43 @@ function MyOrder() {
       item.Payment?.paymentMethod.toLocaleLowerCase().includes(searchTerm) ||
       item.totalAmount == parseInt(searchTerm),
   );
-  useEffect(() => {
-    dispatch(fetchMyOrders());
-  }, []);
-  console.log(items, "items");
+  useEffect(()=>{
+        dispatch(fetchMyOrders())
+    },[dispatch])
+ useEffect(() => {
+  const updateStatus = (data:any) => {
+    console.log("SOCKET UPDATE:", data);
+
+    dispatch(updateOrderStatusSlice(data));
+
+    dispatch(fetchMyOrders()); // refresh redux state
+  };
+
+  socket.on("statusUpdated", updateStatus);
+
+  return () => {
+    socket.off("statusUpdated", updateStatus);
+  };
+}, [dispatch]);
+  
+//   useEffect(() => {
+//   console.log("Socket connected:", socket.connected);
+//   console.log("Socket ID:", socket.id);
+
+//   socket.on("connect", () => {
+//     console.log("Connected:", socket.id);
+//   });
+
+//   socket.on("statusUpdated", (data) => {
+//     console.log("Received socket:", data);
+//     dispatch(updateOrderStatusSlice(data));
+//   });
+
+//   return () => {
+//     socket.off("statusUpdated");
+//     socket.off("connect");
+//   };
+// }, [dispatch]);
   return (
     <>
       <Navbar />
@@ -87,7 +121,8 @@ function MyOrder() {
               {newItems.length > 0 &&
                 newItems.map((item) => {
                   return (
-                    <tr className="hover:bg-slate-50">
+                    
+                    <tr key={item.id} className="hover:bg-slate-50">
                       <td className="p-4 border-b border-slate-200 py-5">
                         <Link to={`/my-order/${item.id}`}>
                           <p className="block font-semibold text-sm text-slate-800">
@@ -98,7 +133,7 @@ function MyOrder() {
 
                       <td className="p-4 border-b border-slate-200 py-5">
                         <p className="block font-semibold text-sm text-slate-800">
-                          {item.orderStatus}
+                          {item?.orderStatus}
                         </p>
                       </td>
                       <td className="p-4 border-b border-slate-200 py-5">
@@ -112,6 +147,7 @@ function MyOrder() {
                         </p>
                       </td>
                     </tr>
+                    
                   );
                 })}
             </tbody>

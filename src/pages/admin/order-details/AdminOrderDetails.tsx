@@ -15,13 +15,17 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import AdminLayout from "../AdminLayout";
-import { useEffect } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { fetchAdminOrderDetail } from "../../../store/adminOrderSlice";
+import { OrderStatus } from "../../my-order-details/type";
+import { cancelOrderAPI } from "../../../store/checkOutSlice";
+import { socket } from "../../../App";
 
 function AdminOrderDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
  const { orderDetails, order } = useAppSelector((store) => store.adminOrder);
+ 
 // const [data] = items.filter((order)=>order.id === id)
 
   // const [data] = items.filter((order)=>order.id === id)
@@ -34,12 +38,24 @@ function AdminOrderDetails() {
     }
   },[dispatch,id]);
 
-//   const cancelOrder = () => {
-//     if (id) {
-//       dispatch(cancelOrderAPI(id));
-//     }
-//   };
-//   console.log(orderDetails[0]);
+  // const cancelOrder = () => {
+  //   if (id) {
+  //     dispatch(cancelOrderAPI(id));
+  //   }
+  // };
+  // console.log(orderDetails[0]);
+  
+  const handleOrderStatusChange = (e:ChangeEvent<HTMLSelectElement>)=>{
+  
+  if(id){
+    socket.emit("updateOrderStatus",{
+        status : e.currentTarget.value, 
+        orderId : id, 
+        userId : order?.userId
+    })
+  }
+
+}
   
   return (
     <>
@@ -106,22 +122,7 @@ function AdminOrderDetails() {
                   );
                 })}
             </div>
-            <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
-              <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
-                <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
-                  Summary
-                </h3>
-
-                <div className="flex justify-between items-center w-full">
-                  <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">
-                    Total
-                  </p>
-                  <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                    Rs. {}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
+             <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
                 <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
                   Shipping
                 </h3>
@@ -149,6 +150,22 @@ function AdminOrderDetails() {
                   </p>
                 </div>
               </div>
+            <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+              <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
+                <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
+                  Summary
+                </h3>
+
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">
+                    Total
+                  </p>
+                  <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
+                    Rs. {order?.totalAmount}
+                  </p>
+                </div>
+              </div>
+             
             </div>
           </div>
           <div className="bg-gray-50 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-8 flex-col">
@@ -184,17 +201,29 @@ function AdminOrderDetails() {
                     </p>
                   </div>
                 </div>
-                {/* <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                  {orderDetails[0]?.order.orderStatus !== orderStatus?.Cancelled && (
-                      
-                    <button
-                      onClick={cancelOrder}
-                      className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
-                    >
-                      Cancel Order
-                    </button>
+                 <label htmlFor="">Change Payment status</label>
+                <select name="" id="">
+                    <option value="Paid">paid</option>
+                    <option value="Unpaid">unpaid</option>
+
+                </select>
+                <div className="flex w-full justify-center items-center md:justify-start md:items-start">
+                  {order?.orderStatus !== OrderStatus?.Cancelled && (
+                    <>
+                       <label  htmlFor="">Change Oroder Status</label>
+                   <select onChange={handleOrderStatusChange}>
+  <option value={OrderStatus.Pending}>Pending</option>
+  <option value="Delivered">Delivered</option>
+  <option value={OrderStatus.ontheway}>On the way</option>
+  <option value="Cancelled">Cancelled</option>
+  <option value="preparation">Preparation</option>
+</select>
+                   
+                    </>
+                   
                   )}
-                </div> */}
+                  
+                </div>
               </div>
             </div>
           </div>

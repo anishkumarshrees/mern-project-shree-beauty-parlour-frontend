@@ -8,6 +8,7 @@ import { APIWITHTOKEN } from "../http";
 import type {  IOrderDetails, PaymentStatus } from "../pages/my-order-details/type";
 
 export interface IOrderInfo {
+  userId : string
   id: string;
   orderStatus: string;
   addressLine: string;
