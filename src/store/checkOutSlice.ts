@@ -5,6 +5,7 @@ import { OrderStatus, type IOrderDetails, type IOrderInfo } from "../pages/my-or
 // import { setStatus } from "./authSlice";
 import type { AppDispatch } from "./store";
 import { APIWITHTOKEN } from "../http";
+import { clearCart } from "./cartSlice";
 
 const innitialState: IOrder = {
   status: Status.LOADING,
@@ -67,13 +68,18 @@ export function orderItem(data: IData) {
     try {
       const response = await APIWITHTOKEN.post("/orders", data);
       if (response.status === 200) {
-        dispatch(setStatus(Status.SUCCESS));
-        dispatch(setItems(response.data.data));
-        if (response.data.url) {
-          dispatch(setKhaltiUrl(response.data.url));
-          window.location.href = response.data.url
-        }
-      } else {
+  dispatch(setStatus(Status.SUCCESS));
+  dispatch(setItems(response.data.data));
+
+  // Empty Redux cart
+  dispatch(clearCart());
+
+  // Redirect to payment gateway if needed
+  if (response.data.url) {
+    dispatch(setKhaltiUrl(response.data.url));
+    window.location.href = response.data.url;
+  }
+}else {
         dispatch(setStatus(Status.ERROR));
       }
     } catch (error) {

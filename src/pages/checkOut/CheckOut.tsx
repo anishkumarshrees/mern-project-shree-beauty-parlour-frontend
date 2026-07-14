@@ -3,11 +3,18 @@ import Navbar from "../../globals/components/Navbar";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { PaymentMethod, type IData } from "./typse";
 import { orderItem } from "../../store/checkOutSlice";
+import { useNavigate } from "react-router-dom";
+// import { handleCartItemDelete } from "../../store/cartSlice";
 
 function CheckOut() {
+  //later added
+  const navigate = useNavigate();
+
+
+
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((store) => store.cart);
-  const { khaltiUrl , status} = useAppSelector((store) => store.orders);
+  const { khaltiUrl } = useAppSelector((store) => store.orders);
   const subTotal = items.reduce(
     (total, item) => item.product.productPrice * item.quantity + total,
     0,
@@ -35,25 +42,30 @@ function CheckOut() {
       [name]: value,
     });
   };
-  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const productData =
-      items.length > 0
-        ? items.map((item) => {
-            return {
-              productId: item.product.id,
-              productQty: item.quantity,
-            };
-          })
-        : [];
-    const finalData = {
-      ...data,
-      products: productData,
-      totalAmount: total,
-    };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-   await dispatch(orderItem(finalData));
+  const productData =
+    items.length > 0
+      ? items.map((item) => ({
+          productId: item.product.id,
+          productQty: item.quantity,
+        }))
+      : [];
+
+  const finalData = {
+    ...data,
+    products: productData,
+    totalAmount: total,
   };
+
+  await dispatch(orderItem(finalData));
+
+  // Redirect only for COD
+  if (paymentMethod === PaymentMethod.Cod) {
+    navigate("/");
+  }
+};
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
     PaymentMethod.Cod,
   );
@@ -66,12 +78,11 @@ function CheckOut() {
   };
   console.log(paymentMethod);
 
-  useEffect(()=>{
-    if(khaltiUrl){
-      window.location.href = khaltiUrl
-      return;
-    }
-  },[khaltiUrl,status])
+ useEffect(() => {
+  if (paymentMethod === PaymentMethod.Khalti && khaltiUrl) {
+    window.location.href = khaltiUrl;
+  }
+}, [khaltiUrl, paymentMethod]);
   return (
     <>
       <Navbar />
@@ -90,7 +101,7 @@ function CheckOut() {
                         <li className="flex items-start gap-4">
                           <div className="w-24 h-24 flex p-3 shrink-0 bg-white rounded-md dark:bg-neutral-700">
                             <img
-                              src={`http://localhost:3000/${item?.product.productImage}`}
+                              src={`https://shree-beauty-parlour-server.onrender.com/${item.product.productImage}`}
                               className="w-full object-contain"
                               alt="black sweater"
                             />
