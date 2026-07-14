@@ -23,7 +23,7 @@ import AdminOrder from "./pages/admin/order/AdminOrder";
 import AdminOrderDetails from "./pages/admin/order-details/AdminOrderDetails";
 // import AdminIndex from "./pages/admin/Layout";
 import { io } from "socket.io-client";
-export const socket = io("http://localhost:3000",{
+export const socket = io("https://shree-beauty-parlour-server.onrender.com/",{
   auth : {
     token : localStorage.getItem("thisistoken")
   }

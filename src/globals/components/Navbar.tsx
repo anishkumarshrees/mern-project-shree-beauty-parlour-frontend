@@ -30,7 +30,7 @@ function Navbar() {
           {/* Logo */}
 
           <Link
-            to="/home"
+            to="/"
             className="flex items-center gap-3 group"
           >
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 via-rose-400 to-pink-300 flex items-center justify-center shadow-lg group-hover:scale-110 duration-300">
@@ -64,7 +64,7 @@ function Navbar() {
           <nav className="flex flex-wrap justify-center gap-7 text-gray-700 font-semibold mt-4 md:mt-0">
 
             <Link
-              to="/home"
+              to="/"
               className="hover:text-pink-600 duration-300"
             >
               Home
@@ -119,7 +119,7 @@ function Navbar() {
                     })
                   );
 
-                  navigate("/home", {
+                  navigate("/", {
                     replace: true,
                   });
                 }}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://192.168.1.78:3000/api",
+  baseURL: "https://shree-beauty-parlour-server.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -9,7 +9,7 @@ const API = axios.create({
 });
 
 const APIWITHTOKEN = axios.create({
-  baseURL: "http://192.168.1.78:3000/api",
+  baseURL: "https://shree-beauty-parlour-server.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

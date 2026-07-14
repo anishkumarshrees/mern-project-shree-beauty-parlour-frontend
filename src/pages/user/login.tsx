@@ -31,7 +31,7 @@ function Login() {
   useEffect(() => {
     const token = user?.token || localStorage.getItem("thisistoken");
     if (token) {
-      navigate("/home");
+      navigate("/");
     }
   }, [user?.token, navigate]);
 
