@@ -7,9 +7,13 @@ import { fetchCartItems } from "../../store/cartSlice";
 function Navbar() {
   const reduxToken = useAppSelector((store) => store.auth.user.token);
   const { items } = useAppSelector((store) => store.cart);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(reduxToken || localStorage.getItem("thisistoken"));
+
+  const isLoggedIn = Boolean(
+    reduxToken || localStorage.getItem("thisistoken")
+  );
 
   useEffect(() => {
     if (reduxToken) {
@@ -18,89 +22,131 @@ function Navbar() {
   }, [dispatch, reduxToken]);
 
   return (
-    <header className="sticky top-0 bg-white shadow">
-      <div className="container flex flex-col sm:flex-row justify-between items-center mx-auto py-4 px-8">
-        <div className="flex items-center text-2xl">
-          <div className="w-12 mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-              <path
-                fill="#BEE3F8"
-                d="M44,7L4,23l40,16l-7-16L44,7z M36,23H17l18-7l1,6V23z"
-              />
-              <path
-                fill="#3182CE"
-                d="M40.212,10.669l-5.044,11.529L34.817,23l0.351,0.802l5.044,11.529L9.385,23L40.212,10.669 M44,7L4,23 l40,16l-7-16L44,7L44,7z"
-              ></path>
-              <path
-                fill="#3182CE"
-                d="M36,22l-1-6l-18,7l17,7l-2-5l-8-2h12V22z M27.661,21l5.771-2.244L33.806,21H27.661z"
-              ></path>
-            </svg>
-          </div>
-          <Link to="/home">
-          Shree Beauty Parlour....</Link>
-        </div>
-        {/* <div className="flex mt-4 sm:mt-0">
-        <Link className="px-4" to="/products">Products</Link>
-        <Link className="px-4" to="/my-orders">My Orders</Link>
+    <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/90 border-b border-pink-100 shadow-lg">
+      <div className="max-w-7xl mx-auto px-5">
 
-      </div> */}
-        <Link to="/product" className="w-full md:w-auto">
-          Products
-        </Link>
-        <Link to="/my-order" className="w-full md:w-auto">
-          My Orders
-        </Link>
+        <div className="flex flex-wrap items-center justify-between ">
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          {isLoggedIn ? (
-            <>
-              <span className="mr-3">
-                <Link to="/my-cart">
-                  Cart<sup>{items.length > 0 ? items.length : 0}</sup>
-                </Link>
-              </span>
+          {/* Logo */}
+
+          <Link
+            to="/home"
+            className="flex items-center gap-3 group"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 via-rose-400 to-pink-300 flex items-center justify-center shadow-lg group-hover:scale-110 duration-300">
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 48 48"
+                className="w-5 h-5"
+              >
+                <path
+                  fill="white"
+                  d="M44,7L4,23l40,16l-7-16L44,7z"
+                />
+              </svg>
+
+            </div>
+
+            <div>
+              <h1 className="text-2 font-bold bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent">
+                Shree Beauty
+              </h1>
+
+              <p className="text-xs text-gray-500 tracking-widest">
+                PARLOUR
+              </p>
+            </div>
+          </Link>
+
+          {/* Navigation */}
+
+          <nav className="flex flex-wrap justify-center gap-7 text-gray-700 font-semibold mt-4 md:mt-0">
+
+            <Link
+              to="/home"
+              className="hover:text-pink-600 duration-300"
+            >
+              Home
+            </Link>
+
+            <Link
+              to="/product"
+              className="hover:text-pink-600 duration-300"
+            >
+              Products
+            </Link>
+
+            <Link
+              to="/my-order"
+              className="hover:text-pink-600 duration-300"
+            >
+              My Orders
+            </Link>
+
+            {isLoggedIn && (
+              <Link
+                to="/my-cart"
+                className="relative hover:text-pink-600 duration-300"
+              >
+                Cart
+
+                {items.length > 0 && (
+                  <span className="absolute -top-3 -right-4 bg-pink-500 text-white rounded-full text-[11px] w-5 h-5 flex items-center justify-center shadow">
+                    {items.length}
+                  </span>
+                )}
+              </Link>
+            )}
+
+          </nav>
+
+          {/* Buttons */}
+
+          <div className="flex gap-3 mt-4 md:mt-0">
+
+            {isLoggedIn ? (
               <button
-                type="button"
                 onClick={() => {
                   localStorage.removeItem("thisistoken");
+
                   dispatch(
                     setUser({
                       userName: null,
                       email: null,
                       password: null,
                       token: null,
-                    }),
+                    })
                   );
-                  navigate("/home", { replace: true });
+
+                  navigate("/home", {
+                    replace: true,
+                  });
                 }}
-                className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
+                className="px-6 py-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg hover:scale-105 hover:shadow-xl duration-300"
               >
                 Logout
               </button>
-            </>
-          ) : (
-            <>
-              <Link to="/register" className="w-full md:w-auto">
-                <button
-                  type="button"
-                  className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
-                >
-                  Register
-                </button>
-              </Link>
+            ) : (
+              <>
+                <Link to="/register">
+                  <button className="px-6 py-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg hover:scale-105 duration-300">
+                    Register
+                  </button>
+                </Link>
 
-              <Link to="/login" className="w-full md:w-auto">
-                <button
-                  type="button"
-                  className="w-full md:w-auto py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white"
-                >
-                  Login
-                </button>
-              </Link>
-            </>
-          )}
+                <Link to="/login">
+                  <button className="px-6 py-2 rounded-full border-2 border-pink-500 text-pink-600 hover:bg-pink-500 hover:text-white duration-300">
+                    Login
+                  </button>
+                </Link>
+              </>
+            )}
+
+          </div>
+
         </div>
+
       </div>
     </header>
   );

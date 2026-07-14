@@ -63,7 +63,7 @@ const ProductModal:React.FC<ModalProps>=({closeModal} : ModalProps)=>
         e.preventDefault()
         setLoading(true)
         try {
-          dispatch(addProducts(data))
+          dispatch(addProducts(data as any))
         } catch (error) {
             console.log(error)}
 

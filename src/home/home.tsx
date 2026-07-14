@@ -1,23 +1,49 @@
 import { Link } from "react-router-dom";
 import Navbar from "../globals/components/Navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProducts } from "../store/productSlice";
+import { API } from "../http";
+import type { ICategory } from "../pages/admin/categories/Categories";
 
 function Home() {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((store) => store.product);
 
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await API.get("/category");
+        setCategories(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // ADD THIS HERE 👇
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter(
+          (product) => product.categoryId === selectedCategory
+        );
+
 
   return (
     <div>
       <Navbar />
-      <main className="text-gray-900 bg-gradient-to-b from-sky-50 to-white">
+      <main className="text-gray-900 bg-gradient-to-b from-sky-50 to-white ">
         <section className="pt-16 md:pt-32">
-          <div className="container mx-auto px-6 lg:flex items-center gap-12">
+          <div className=" w-full px-6 lg:flex items-center gap-12">
             <div className="text-center lg:text-left lg:w-1/2 py-8">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold !text-pink-600 leading-none ">
                 Shree Beauty Parlour — Look & Feel Gorgeous
@@ -600,45 +626,122 @@ function Home() {
             </div>
           </div>
         </section>
-        <section id="featured" className="py-16 bg-white">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl lg:text-4xl font-semibold">
-              Featured Products
-            </h2>
-            <p className="mt-3 text-gray-600">
-              Popular picks from our store — curated for you.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-              {products && products.length > 0 ? (
-                products.slice(0, 3).map((p) => (
-                  <Link
-                    key={p.id}
-                    to={`/product/${p.id}`}
-                    className="block p-4 rounded-lg border hover:shadow-lg transition bg-white"
-                  >
-                    <div className="h-44 bg-gradient-to-br from-pink-50 to-pink-200 rounded mb-4 flex items-center justify-center overflow-hidden">
-                      <img
-                        src={`http://localhost:3000/${p.productImage}`}
-                        alt={p.productName}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <h3 className="font-semibold">{p.productName}</h3>
-                    <p className="text-pink-600 mt-2">₹{p.productPrice}</p>
-                    <p className="text-pink-600 mt-2">{p.productDescription}</p>
-                    <p className="text-pink-600 mt-2">
-                      Total Stock : {p.productTotalStock}
-                    </p>
-                  </Link>
-                ))
-              ) : (
-                <p className="col-span-3 text-gray-500">
-                  No products available yet.
+        <section id="featured" className="py-16 bg-gradient-to-b from-white to-pink-50">
+          <div className="flex flex-wrap justify-center gap-4 my-8">
+  <button
+    onClick={() => setSelectedCategory("All")}
+    className="px-5 py-2 rounded-full bg-pink-500 text-white"
+  >
+    All
+  </button>
+
+  {categories.map((category) => (
+    <button
+      key={category.id}
+      onClick={() => setSelectedCategory(category.id)}
+      className="px-5 py-2 rounded-full border border-pink-500 hover:bg-pink-500 hover:text-white"
+    >
+      {category.categoryName}
+    </button>
+  ))}
+</div>
+  <div className="px-6">
+
+    <div className="flex items-center justify-between mb-8">
+      <div>
+        <h2 className="text-3xl lg:text-4xl font-bold text-gray-800">
+          Featured Products
+        </h2>
+
+        <p className="text-gray-500 mt-2">
+          Popular picks from our store — curated for you.
+        </p>
+      </div>
+
+      <Link
+        to="/product"
+        className="text-pink-600 font-semibold hover:underline"
+      >
+        View All →
+      </Link>
+    </div>
+
+    {products && products.length > 0 ? (
+
+      <div className="overflow-x-auto scrollbar-hide">
+
+        <div className="flex gap-6 w-max pb-3">
+
+          {filteredProducts.map((p) => (
+
+            <Link
+              key={p.id}
+              to={`/product/${p.id}`}
+              className="w-72 flex-shrink-0 rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 duration-300"
+            >
+
+              <div className="overflow-hidden">
+
+                <img
+                  src={`http://192.168.1.78:3000/${p.productImage}`}
+                  alt={p.productName}
+                  className="h-60 w-full object-cover hover:scale-110 duration-500"
+                />
+
+              </div>
+
+              <div className="p-5">
+
+                <span className="text-xs bg-pink-100 text-pink-600 px-3 py-1 rounded-full">
+                  Beauty Product
+                </span>
+
+                <h3 className="text-xl font-bold mt-3 truncate">
+                  {p.productName}
+                </h3>
+
+                <p className="text-gray-500 mt-2 line-clamp-2">
+                  {p.productDescription}
                 </p>
-              )}
-            </div>
-          </div>
-        </section>
+
+                <div className="flex justify-between items-center mt-5">
+
+                  <div>
+
+                    <h2 className="text-2xl font-bold text-pink-600">
+                      ₹{p.productPrice}
+                    </h2>
+
+                    <p className="text-sm text-gray-500">
+                      Stock: {p.productTotalStock}
+                    </p>
+
+                  </div>
+
+                  <button className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-11 h-11 shadow-lg">
+                    +
+                  </button>
+
+                </div>
+
+              </div>
+
+            </Link>
+
+          ))}
+
+        </div>
+
+      </div>
+
+    ) : (
+      <p className="text-center text-gray-500">
+        No products available.
+      </p>
+    )}
+
+  </div>
+</section>
         <section id="features" className="py-20 lg:pb-40 lg:pt-48">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl lg:text-5xl font-semibold">

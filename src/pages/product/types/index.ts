@@ -9,14 +9,15 @@ export interface IProduct {
   id: string;
   productName: string;
   productDescription: string;
-  productPrice: number;
   productTotalStock: number;
+  productPrice: number;
   discount: number;
-  productImage: string;
-  createdAt: string;
-  updatedAt: string;
   categoryId: string;
-  Category: ICategory;
+  category?: {
+    id: string;
+    categoryName: string;
+  };
+  productImage: string;
 }
 
 export interface IProducts {
