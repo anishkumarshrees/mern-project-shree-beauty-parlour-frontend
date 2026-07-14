@@ -39,7 +39,7 @@ function SingleProduct() {
                   <img
                     src={`http://localhost:3000/${product?.productImage}`}
                     alt={product?.productName}
-                    className="w-full h-72 sm:h-96 md:h-[500px] object-cover transition duration-500 hover:scale-105"
+                    className="w-full h-72 sm:h-96 md:h-125 object-cover transition duration-500 hover:scale-105"
                   />
                 </div>
 
@@ -58,11 +58,11 @@ function SingleProduct() {
               <div className="flex flex-col items-start">
                 {/* Category */}
                 <span className="bg-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-semibold">
-                  {product?.Category?.categoryName}
+                  {product?.category?.categoryName}
                 </span>
 
                 {/* Product Name */}
-                <h1 className="mt-5 text-3xl  md:text-4xl lg:text-5xl font-bold text-black-800 break-words">
+                <h1 className="mt-5 text-3xl  md:text-4xl lg:text-5xl font-bold text-black-800 wrap-break-words">
                   {product?.productName}
                 </h1>
 

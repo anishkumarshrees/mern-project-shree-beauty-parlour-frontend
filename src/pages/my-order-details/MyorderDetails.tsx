@@ -14,8 +14,8 @@ import { OrderStatus } from "./type";
 function MyOrderDetail() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
- const { order, orderDetails,items } = useAppSelector((store) => store.orders);
-const [data] = items.filter((order)=>order.id === id)
+ const { order, orderDetails } = useAppSelector((store) => store.orders);
+// const [data] = items.filter((order)=>order.id === id)
 console.log("ORDER =", order);
 console.log("ORDER DETAILS =", orderDetails);
   // const [data] = items.filter((order)=>order.id === id)
@@ -99,7 +99,7 @@ console.log("ORDER DETAILS =", orderDetails);
                   );
                 })}
             </div>
-            <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+            <div className="flex justify-center md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
               <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
                 <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
                   Summary
@@ -149,7 +149,7 @@ console.log("ORDER DETAILS =", orderDetails);
               Customer
             </h3>
             <div className="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
-              <div className="flex flex-col justify-start items-start flex-shrink-0">
+              <div className="flex flex-col justify-start items-start shrink-0">
                 <div className="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
                   <div className="flex justify-start items-start flex-col space-y-2">
                     <p className="text-sm dark:text-gray-300 leading-5 text-gray-600">
@@ -182,7 +182,7 @@ console.log("ORDER DETAILS =", orderDetails);
                       
                     <button
                       onClick={cancelOrder}
-                      className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
+                      className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800  w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
                     >
                       Cancel Order
                     </button>

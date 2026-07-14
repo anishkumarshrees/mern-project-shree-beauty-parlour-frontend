@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AdminLayout from "../AdminLayout";
 import CategoryTable from "./components/Table";
 // import axios from "axios";
-import { API } from "../../../http";
+
 import { fetchCategoryItems } from "../../../store/adminCategorySlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 

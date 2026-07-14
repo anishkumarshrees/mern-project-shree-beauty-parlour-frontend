@@ -15,10 +15,10 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import AdminLayout from "../AdminLayout";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 import { fetchAdminOrderDetail } from "../../../store/adminOrderSlice";
 import { OrderStatus } from "../../my-order-details/type";
-import { cancelOrderAPI } from "../../../store/checkOutSlice";
+// import { cancelOrderAPI } from "../../../store/checkOutSlice";
 import { socket } from "../../../App";
 
 function AdminOrderDetails() {
@@ -150,7 +150,7 @@ function AdminOrderDetails() {
                   </p>
                 </div>
               </div>
-            <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+            <div className="flex justify-center  md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
               <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
                 <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
                   Summary
@@ -173,7 +173,7 @@ function AdminOrderDetails() {
               Customer
             </h3>
             <div className="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
-              <div className="flex flex-col justify-start items-start flex-shrink-0">
+              <div className="flex flex-col justify-start items-start shrink-0">
                 <div className="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
                   <div className="flex justify-start items-start flex-col space-y-2">
                     <p className="text-sm dark:text-gray-300 leading-5 text-gray-600">

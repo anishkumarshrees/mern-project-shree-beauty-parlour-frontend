@@ -1,6 +1,6 @@
 import type { Status } from "../../../globals/types/type";
 
-interface ICategory {
+export interface ICategory {
   id: string;
   categoryName: string;
 }
