@@ -6,16 +6,17 @@ function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-[100dvh] bg-gray-100 overflow-hidden">
+    <div className="flex h-[100dvh] overflow-hidden bg-gray-100">
+
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
           className="
           fixed inset-0
+          z-40
           bg-black/50
           backdrop-blur-sm
-          z-40
           md:hidden
           "
           onClick={() => setSidebarOpen(false)}
@@ -23,51 +24,74 @@ function AdminLayout() {
       )}
 
 
+
       {/* Sidebar */}
       <aside
         className={`
-          fixed md:static
-          top-0 left-0
-          z-50
-          h-full
-          w-72
-          shrink-0
-          bg-gradient-to-b from-gray-950 to-gray-800
-          shadow-xl
-          transition-transform duration-300 ease-in-out
+        fixed md:static
+        z-50
+        top-0 left-0
+        h-full
+        w-64
+        bg-[#111827]
+        shadow-xl
+        transition-transform
+        duration-300
+        ease-in-out
+        flex
+        flex-col
 
-          ${
-            sidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full md:translate-x-0"
-          }
+        ${
+          sidebarOpen
+            ? "translate-x-0"
+            : "-translate-x-full md:translate-x-0"
+        }
         `}
       >
+
 
         {/* Logo */}
         <div
           className="
-          h-16
+          h-20
+          px-6
           flex
           items-center
           justify-between
-          px-5
           border-b
           border-gray-700
           "
         >
 
           <div>
-            <h1 className="text-white text-lg font-bold">
+
+            <h1
+              className="
+              text-white
+              text-2xl
+              font-bold
+              tracking-wide
+              "
+            >
               Shree Beauty
             </h1>
 
-            <p className="text-xs text-gray-400">
-              Admin Panel
+
+            <p
+              className="
+              text-gray-400
+              text-xs
+              mt-1
+              "
+            >
+              Admin Dashboard
             </p>
+
           </div>
 
 
+
+          {/* Close button mobile */}
           <button
             onClick={() => setSidebarOpen(false)}
             className="
@@ -79,11 +103,19 @@ function AdminLayout() {
             ✕
           </button>
 
+
         </div>
 
 
-        {/* Sidebar */}
-        <div className="h-[calc(100dvh-64px)] overflow-y-auto">
+
+        {/* Sidebar Links */}
+        <div
+          className="
+          flex-1
+          overflow-y-auto
+          py-4
+          "
+        >
           <Sidebar />
         </div>
 
@@ -92,38 +124,57 @@ function AdminLayout() {
 
 
 
-      {/* Right Section */}
-      <div className="flex flex-col flex-1 min-w-0">
 
 
-        {/* Navbar */}
+      {/* Main Content */}
+      <div
+        className="
+        flex-1
+        flex
+        flex-col
+        min-w-0
+        "
+      >
+
+
+
+
+        {/* Top Navbar */}
         <header
           className="
-          h-16
+          h-20
           bg-white
           border-b
+          shadow-sm
           flex
           items-center
           justify-between
           px-4
-          md:px-6
-          shadow-sm
+          md:px-8
           "
         >
 
 
-          <div className="flex items-center gap-4">
+
+          {/* Left */}
+          <div
+            className="
+            flex
+            items-center
+            gap-4
+            "
+          >
 
 
-            {/* Mobile Menu */}
+            {/* Hamburger */}
             <button
+              onClick={() => setSidebarOpen(true)}
               className="
               md:hidden
               p-2
               rounded-lg
               hover:bg-gray-100
               "
-              onClick={() => setSidebarOpen(true)}
             >
 
               <svg
@@ -146,14 +197,31 @@ function AdminLayout() {
 
 
 
+
+
             <div>
-              <h2 className="font-semibold text-gray-800 text-lg">
+
+              <h2
+                className="
+                text-xl
+                font-bold
+                text-gray-900
+                "
+              >
                 Dashboard
               </h2>
 
-              <p className="text-xs text-gray-500 hidden sm:block">
+
+              <p
+                className="
+                text-sm
+                text-gray-500
+                hidden sm:block
+                "
+              >
                 Manage your beauty parlour
               </p>
+
             </div>
 
 
@@ -161,44 +229,58 @@ function AdminLayout() {
 
 
 
+
+
           {/* Right */}
-          <div className="flex items-center gap-3">
+          <div
+            className="
+            flex
+            items-center
+            gap-4
+            "
+          >
+
 
 
             {/* Search */}
-            <input
-              type="text"
-              placeholder="Search..."
-              className="
-              hidden
-              lg:block
-              w-64
-              rounded-xl
-              border
-              px-4
-              py-2
-              text-sm
-              outline-none
-              focus:ring-2
-              focus:ring-pink-400
-              "
-            />
+            <div className="hidden lg:block">
+
+              <input
+                type="text"
+                placeholder="Search..."
+                className="
+                w-72
+                rounded-xl
+                border
+                border-gray-300
+                px-5
+                py-3
+                text-sm
+                outline-none
+                focus:ring-2
+                focus:ring-pink-400
+                "
+              />
+
+            </div>
 
 
 
-            {/* Profile */}
+
+
+            {/* Admin Profile */}
             <div
               className="
               flex
               items-center
-              gap-2
+              gap-3
               "
             >
 
               <div
                 className="
-                w-10
-                h-10
+                h-11
+                w-11
                 rounded-full
                 bg-pink-500
                 text-white
@@ -206,15 +288,39 @@ function AdminLayout() {
                 items-center
                 justify-center
                 font-bold
+                text-lg
                 "
               >
                 A
               </div>
 
 
-              <span className="hidden sm:block text-sm font-medium">
-                Admin
-              </span>
+
+              <div className="hidden sm:block">
+
+                <p
+                  className="
+                  text-sm
+                  font-semibold
+                  text-gray-800
+                  "
+                >
+                  Admin
+                </p>
+
+
+                <p
+                  className="
+                  text-xs
+                  text-gray-500
+                  "
+                >
+                  Manager
+                </p>
+
+
+              </div>
+
 
             </div>
 
@@ -222,24 +328,29 @@ function AdminLayout() {
           </div>
 
 
+
         </header>
 
 
 
-        {/* Page Content */}
+
+
+
+        {/* Page */}
         <main
           className="
           flex-1
           overflow-y-auto
-          p-3
-          sm:p-4
-          md:p-6
+          bg-gray-50
+          p-4
+          md:p-8
           "
         >
 
           <Outlet />
 
         </main>
+
 
 
       </div>
