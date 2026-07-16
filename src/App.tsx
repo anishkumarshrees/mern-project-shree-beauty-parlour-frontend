@@ -23,11 +23,15 @@ import AdminOrder from "./pages/admin/order/AdminOrder";
 import AdminOrderDetails from "./pages/admin/order-details/AdminOrderDetails";
 // import AdminIndex from "./pages/admin/Layout";
 import { io } from "socket.io-client";
-export const socket = io("https://shree-beauty-parlour-server.onrender.com/",{
-  auth : {
-    token : localStorage.getItem("thisistoken")
-  }
-})
+import AdminProtectedRoute from "./pages/admin/adminProtected/AdminProtectedRoute";
+import AdminLayout from "./pages/admin/AdminLayout";
+
+
+export const socket = io("http://localhost:3000", {
+  auth: {
+    token: localStorage.getItem("thisistoken"),
+  },
+});
 
 function App() {
   
@@ -46,14 +50,21 @@ function App() {
             <Route path="/my-checkout" element={<CheckOut />} />
             <Route path="/my-order" element={<MyOrder />} />
             <Route path="/my-order/:id" element={<MyOrderDetails />} />
-            <Route path="/admin" element={<AdminStats />} />
-             <Route path="/admin/categories" element={<Categories />} />
-          
-          <Route path="/admin/users" element={<User />} />
-          <Route path="/admin/product" element={<AdminProduct />} />
-           <Route path="/admin/product/:id" element={<ProductDescription />} />
-            <Route path="/admin/orders" element={<AdminOrder />} />
-             <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
+            
+
+             <Route element={<AdminProtectedRoute />}>
+  <Route path="/admin" element={<AdminLayout />}>
+    <Route index element={<AdminStats />} />
+    <Route path="categories" element={<Categories />} />
+    <Route path="users" element={<User />} />
+    <Route path="product" element={<AdminProduct />} />
+    <Route path="product/:id" element={<ProductDescription />} />
+    <Route path="orders" element={<AdminOrder />} />
+    <Route path="orders/:id" element={<AdminOrderDetails />} />
+ 
+</Route>
+    
+</Route>
           </Routes>
         </BrowserRouter>
       </Provider>

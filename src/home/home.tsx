@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-   useEffect(() => {
+  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await API.get("/category");
@@ -33,10 +33,7 @@ function Home() {
   const filteredProducts =
     selectedCategory === "All"
       ? products
-      : products.filter(
-          (product) => product.categoryId === selectedCategory
-        );
-
+      : products.filter((product) => product.categoryId === selectedCategory);
 
   return (
     <div>
@@ -626,122 +623,105 @@ function Home() {
             </div>
           </div>
         </section>
-        <section id="featured" className="py-16 bg-gradient-to-b from-white to-pink-50">
+        <section
+          id="featured"
+          className="py-16 bg-gradient-to-b from-white to-pink-50"
+        >
           <div className="flex flex-wrap justify-center gap-4 my-8">
-  <button
-    onClick={() => setSelectedCategory("All")}
-    className="px-5 py-2 rounded-full bg-pink-500 text-white"
-  >
-    All
-  </button>
-
-  {categories.map((category) => (
-    <button
-      key={category.id}
-      onClick={() => setSelectedCategory(category.id)}
-      className="px-5 py-2 rounded-full border border-pink-500 hover:bg-pink-500 hover:text-white"
-    >
-      {category.categoryName}
-    </button>
-  ))}
-</div>
-  <div className="px-6">
-
-    <div className="flex items-center justify-between mb-8">
-      <div>
-        <h2 className="text-3xl lg:text-4xl font-bold text-gray-800">
-          Featured Products
-        </h2>
-
-        <p className="text-gray-500 mt-2">
-          Popular picks from our store — curated for you.
-        </p>
-      </div>
-
-      <Link
-        to="/product"
-        className="text-pink-600 font-semibold hover:underline"
-      >
-        View All →
-      </Link>
-    </div>
-
-    {products && products.length > 0 ? (
-
-      <div className="overflow-x-auto scrollbar-hide">
-
-        <div className="flex gap-6 w-max pb-3">
-
-          {filteredProducts.map((p) => (
-
-            <Link
-              key={p.id}
-              to={`/product/${p.id}`}
-              className="w-72 flex-shrink-0 rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 duration-300"
+            <button
+              onClick={() => setSelectedCategory("All")}
+              className="px-5 py-2 rounded-full bg-pink-500 text-white"
             >
+              All
+            </button>
 
-              <div className="overflow-hidden">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className="px-5 py-2 rounded-full border border-pink-500 hover:bg-pink-500 hover:text-white"
+              >
+                {category.categoryName}
+              </button>
+            ))}
+          </div>
+          <div className="px-6">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-800">
+                  Featured Products
+                </h2>
 
-                <img
-                  src={`http://192.168.1.78:3000/${p.productImage}`}
-                  alt={p.productName}
-                  className="h-60 w-full object-cover hover:scale-110 duration-500"
-                />
-
-              </div>
-
-              <div className="p-5">
-
-                <span className="text-xs bg-pink-100 text-pink-600 px-3 py-1 rounded-full">
-                  Beauty Product
-                </span>
-
-                <h3 className="text-xl font-bold mt-3 truncate">
-                  {p.productName}
-                </h3>
-
-                <p className="text-gray-500 mt-2 line-clamp-2">
-                  {p.productDescription}
+                <p className="text-gray-500 mt-2">
+                  Popular picks from our store — curated for you.
                 </p>
-
-                <div className="flex justify-between items-center mt-5">
-
-                  <div>
-
-                    <h2 className="text-2xl font-bold text-pink-600">
-                      ₹{p.productPrice}
-                    </h2>
-
-                    <p className="text-sm text-gray-500">
-                      Stock: {p.productTotalStock}
-                    </p>
-
-                  </div>
-
-                  <button className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-11 h-11 shadow-lg">
-                    +
-                  </button>
-
-                </div>
-
               </div>
 
-            </Link>
+              <Link
+                to="/product"
+                className="text-pink-600 font-semibold hover:underline"
+              >
+                View All →
+              </Link>
+            </div>
 
-          ))}
+            {products && products.length > 0 ? (
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex gap-6 w-max pb-3">
+                  {filteredProducts.map((p) => (
+                    <Link
+                      key={p.id}
+                      to={`/product/${p.id}`}
+                      className="w-72 flex-shrink-0 rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 duration-300"
+                    >
+                      <div className="overflow-hidden">
+                        <img
+                          src={`http://192.168.1.78:3000/${p.productImage}`}
+                          alt={p.productName}
+                          className="h-60 w-full object-cover hover:scale-110 duration-500"
+                        />
+                      </div>
 
-        </div>
+                      <div className="p-5">
+                        <span className="text-xs bg-pink-100 text-pink-600 px-3 py-1 rounded-full">
+                          Beauty Product
+                        </span>
 
-      </div>
+                        <h3 className="text-xl font-bold mt-3 truncate">
+                          {p.productName}
+                        </h3>
 
-    ) : (
-      <p className="text-center text-gray-500">
-        No products available.
-      </p>
-    )}
+                        <p className="text-gray-500 mt-2 line-clamp-2">
+                          {p.productDescription}
+                        </p>
 
-  </div>
-</section>
+                        <div className="flex justify-between items-center mt-5">
+                          <div>
+                            <h2 className="text-2xl font-bold text-pink-600">
+                              ₹{p.productPrice}
+                            </h2>
+
+                            <p className="text-sm text-gray-500">
+                              Stock: {p.productTotalStock}
+                            </p>
+                          </div>
+
+                          <button className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-11 h-11 shadow-lg">
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <p className="text-center text-gray-500">
+                No products available.
+              </p>
+            )}
+          </div>
+        </section>
         <section id="features" className="py-20 lg:pb-40 lg:pt-48">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl lg:text-5xl font-semibold">
@@ -1799,11 +1779,7 @@ function Home() {
                     massa. Sit amet consectetur adipiscing elit duis.
                   </p>
                   <div className="flex items-center mt-8">
-                    <img
-                      className="w-12 h-12 mr-4 rounded-full"
-                      src="https://placeimg.com/150/150/people"
-                      alt="Jane Doe"
-                    />
+                    <img src="https://picsum.photos/150" alt="User" />
                     <div>
                       <p>Jane Doe</p>
                       <p className="text-sm text-gray-600">

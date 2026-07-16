@@ -1,19 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://shree-beauty-parlour-server.onrender.com/api",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
+  baseURL: "http://localhost:3000/api",
 });
 
 const APIWITHTOKEN = axios.create({
-  baseURL: "https://shree-beauty-parlour-server.onrender.com/api",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
+  baseURL: "http://localhost:3000/api",
 });
 
 APIWITHTOKEN.interceptors.request.use((config) => {
@@ -21,8 +13,6 @@ APIWITHTOKEN.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = token;
-  } else {
-    delete config.headers.Authorization;
   }
 
   return config;

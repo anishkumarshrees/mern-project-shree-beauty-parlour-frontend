@@ -13,6 +13,7 @@ interface IUser {
   email: string | null;
   password: string | null;
   token?: string | null;
+  role?: string | null;
 }
 
 interface IAuthState {
@@ -80,16 +81,19 @@ export function loginUser(data: IUserLogin) {
   return async function loginUserThunk(dispatch: AppDispatch) {
     try {
       const response = await API.post("/login", data);
-      console.log(response);
-      if (response.status === 200) {
-        dispatch(setStatus(Status.SUCCESS));
-        if (response.data.token) {
-          localStorage.setItem("thisistoken", response.data.token);
-          dispatch(setToken(response.data.token));
-        } else {
-          dispatch(setStatus(Status.ERROR));
-        }
-      } else {
+     console.log("LOGIN RESPONSE");
+console.log(response.data);
+     if (response.data.token) {
+  localStorage.setItem("thisistoken", response.data.token);
+
+  // Save role
+  localStorage.setItem("role", response.data.data.role);
+
+  dispatch(setToken(response.data.token));
+
+  // Save user in Redux
+  dispatch(setUser(response.data.data));
+}  else {
         dispatch(setStatus(Status.ERROR));
       }
     } catch (error) {
