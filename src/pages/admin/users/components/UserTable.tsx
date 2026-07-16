@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../../../store/hooks"
 
 function UserTable({users}:{users : IUser[]}){
     const dispatch = useAppDispatch()
-    const [searchTerm ,setSearchTerm] = useState<string>("")
+    const [searchTerm ] = useState<string>("")
     const deleteUser = (id: string)=>{
         if(id){
             dispatch(deleteUserById(id))

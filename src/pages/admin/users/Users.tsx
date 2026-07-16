@@ -12,9 +12,9 @@ function User(){
         dispatch(fetchUsers())
     },[])
     return(
-        <AdminLayout>
+        
            <UserTable users={users}/>
-        </AdminLayout>
+       
     )
 }
 

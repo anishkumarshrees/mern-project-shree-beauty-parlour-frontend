@@ -34,9 +34,9 @@ const {items:categories} = useAppSelector((store)=>store.categories)
   }, []);
 
   return (
-    <AdminLayout>
+  
       <CategoryTable categories={categories} />
-    </AdminLayout>
+   
   );
 }
 

@@ -14,9 +14,9 @@ function AdminProduct(){
     dispatch(fetchProducts())
   },[dispatch])
     return(
-        <AdminLayout>
+       
            <ProductTable products ={products}/>
-        </AdminLayout>
+       
     )
 }
 export default AdminProduct

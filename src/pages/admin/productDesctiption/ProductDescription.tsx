@@ -14,9 +14,10 @@ function ProductDescription(){
        id && dispatch(fetchProductAdmin(id))
     },[])
 return(
-   <AdminLayout>
-    <h1>helelo</h1>
-   </AdminLayout>
+   
+  <>
+  </>
+  
 )
 }
 export default ProductDescription
