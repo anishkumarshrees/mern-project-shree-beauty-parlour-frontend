@@ -65,7 +65,7 @@ console.log("ORDER DETAILS =", orderDetails);
                       <div className="pb-4 md:pb-8 w-full md:w-40">
                         <img
                           className="w-full hidden md:block"
-                          src={`https://shree-beauty-parlour-six.vercel.app//${od?.product?.productImage}`}
+                          src={`https://shree-beauty-parlour-server.onrender.com//${od?.product?.productImage}`}
                           alt="hello"
                         />
                       </div>

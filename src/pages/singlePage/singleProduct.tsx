@@ -37,7 +37,7 @@ function SingleProduct() {
               <div>
                 <div className="overflow-hidden rounded-2xl bg-gray-100 shadow-md">
                   <img
-                    src={`https://shree-beauty-parlour-six.vercel.app//${product?.productImage}`}
+                    src={`https://shree-beauty-parlour-server.onrender.com/${product?.productImage}`}
                     alt={product?.productName}
                     className="w-full h-72 sm:h-96 md:h-125 object-cover transition duration-500 hover:scale-105"
                   />
