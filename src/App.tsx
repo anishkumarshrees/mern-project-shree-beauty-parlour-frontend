@@ -27,7 +27,7 @@ import AdminProtectedRoute from "./pages/admin/adminProtected/AdminProtectedRout
 import AdminLayout from "./pages/admin/AdminLayout";
 
 
-export const socket = io("https://shree-beauty-parlour-six.vercel.app/", {
+export const socket = io("https://shree-beauty-parlour-server.onrender.com", {
   auth: {
     token: localStorage.getItem("thisistoken"),
   },
