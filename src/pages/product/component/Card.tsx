@@ -28,7 +28,7 @@ const Card: React.FC<ICardProduct> = ({ product }) => {
         {/* Image */}
         <div className="relative overflow-hidden">
           <img
-            src={`http://192.168.1.78:3000/${product.productImage}`}
+            src={`https://shree-beauty-parlour-server.onrender.com/${product.productImage}`}
             alt={product.productName}
             className="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
           />
