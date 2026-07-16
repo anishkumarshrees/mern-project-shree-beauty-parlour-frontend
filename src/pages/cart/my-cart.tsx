@@ -43,7 +43,7 @@ function MyCart(){
                         <tr>
                 <td className="py-4">
                   <div className="flex items-center">
-                    <img className="h-16 w-16 mr-4" src={`http://localhost:3000/${item?.product.productImage}`} alt="Product image" />
+                    <img className="h-16 w-16 mr-4" src={`https://shree-beauty-parlour-six.vercel.app//${item?.product.productImage}`} alt="Product image" />
                     <span className="font-semibold">{item?.product.productName}</span>
                   </div>
                 </td>

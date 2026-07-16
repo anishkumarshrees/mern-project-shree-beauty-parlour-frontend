@@ -27,7 +27,7 @@ import AdminProtectedRoute from "./pages/admin/adminProtected/AdminProtectedRout
 import AdminLayout from "./pages/admin/AdminLayout";
 
 
-export const socket = io("http://localhost:3000", {
+export const socket = io("https://shree-beauty-parlour-six.vercel.app/", {
   auth: {
     token: localStorage.getItem("thisistoken"),
   },

@@ -88,7 +88,7 @@ function AdminOrderDetails() {
                       <div className="pb-4 md:pb-8 w-full md:w-40">
                         <img
                           className="w-full hidden md:block"
-                          src={`http://localhost:3000/${od?.product?.productImage}`}
+                          src={`https://shree-beauty-parlour-six.vercel.app//${od?.product?.productImage}`}
                           alt="hello"
                         />
                       </div>
