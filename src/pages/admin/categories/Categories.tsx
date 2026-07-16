@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AdminLayout from "../AdminLayout";
+// import AdminLayout from "../AdminLayout";
 import CategoryTable from "./components/Table";
 // import axios from "axios";
 

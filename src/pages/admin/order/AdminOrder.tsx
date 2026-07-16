@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AdminLayout from "../AdminLayout";
+// import AdminLayout from "../AdminLayout";
 import AdminOrderTable from "./component/AdminOrderTable";
 import { fetchmyOrders } from "../../../store/adminOrderSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -13,9 +13,9 @@ function AdminOrder(){
         dispatch(fetchmyOrders())
       },[])
     return(
-<AdminLayout>
+
 <AdminOrderTable orders={items} />
-</AdminLayout>
+
     )
 }
 export default AdminOrder

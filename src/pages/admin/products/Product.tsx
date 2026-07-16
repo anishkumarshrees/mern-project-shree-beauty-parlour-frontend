@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AdminLayout from "../AdminLayout";
+// import AdminLayout from "../AdminLayout";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { fetchProducts } from "../../../store/adminProductSlice";
 import ProductTable from "./component/ProductTable";

@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import AdminLayout from "../AdminLayout"
+// import AdminLayout from "../AdminLayout"
 import { fetchProductAdmin } from "../../../store/adminProductSlice"
 import { useAppDispatch } from "../../../store/hooks"
 import { useParams } from "react-router-dom"

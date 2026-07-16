@@ -14,7 +14,7 @@
 // import { OrderStatus } from "./type";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import AdminLayout from "../AdminLayout";
+// import AdminLayout from "../AdminLayout";
 import { useEffect, type ChangeEvent } from "react";
 import { fetchAdminOrderDetail } from "../../../store/adminOrderSlice";
 import { OrderStatus } from "../../my-order-details/type";

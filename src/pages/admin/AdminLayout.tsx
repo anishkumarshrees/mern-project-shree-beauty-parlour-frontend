@@ -7,7 +7,7 @@ function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-[100dvh] bg-gray-100 overflow-hidden">
+    <div className="flex h-100dvh bg-gray-100 overflow-hidden">
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -26,7 +26,7 @@ function AdminLayout() {
           z-50
           h-full
           w-72
-          bg-gradient-to-b from-gray-900 to-gray-800
+          bg-linear-to-b from-gray-900 to-gray-800
           shadow-xl
           transition-transform duration-300 ease-in-out
 
