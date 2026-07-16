@@ -1,52 +1,156 @@
-import { Link } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Package,
+  Users,
+  ShoppingBag,
+  CreditCard,
+  FolderOpen,
+  Menu,
+  X,
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 
+function Sidebar() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
-function Sidebar(){
-    return(
-        <>
-         <div className="flex flex-col flex-1 overflow-y-auto">
-      <nav className="flex-1 px-2 py-4 bg-gray-800">
-        <Link to="/admin/"  className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-          </svg>
-          Stats
-        </Link>
-        
-        <Link to="/admin/product"  className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-          </svg>
-          Products
-        </Link>
-        <Link to="/admin/users"  className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
-          </svg>
-          Users
-        </Link>
-        <Link to="/admin/payments"className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-          </svg>
-          Payment
-        </Link>
-        <Link to='/admin/orders' className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          Orders
-        </Link>
-        <Link to="/admin/categories"  className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-          </svg>
-          Categories
-        </Link>
-      </nav>
-    </div>
-        </>
-    )
+  const menus = [
+    {
+      name: "Dashboard",
+      path: "/admin",
+      icon: <LayoutDashboard size={22} />,
+    },
+    {
+      name: "Products",
+      path: "/admin/product",
+      icon: <Package size={22} />,
+    },
+    {
+      name: "Users",
+      path: "/admin/users",
+      icon: <Users size={22} />,
+    },
+    {
+      name: "Orders",
+      path: "/admin/orders",
+      icon: <ShoppingBag size={22} />,
+    },
+    {
+      name: "Payments",
+      path: "/admin/payments",
+      icon: <CreditCard size={22} />,
+    },
+    {
+      name: "Categories",
+      path: "/admin/categories",
+      icon: <FolderOpen size={22} />,
+    },
+  ];
+
+  return (
+    <>
+      {/* Mobile Button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="fixed top-5 left-5 z-50 md:hidden bg-pink-600 p-2 rounded-xl text-white shadow-xl"
+      >
+        <Menu />
+      </button>
+
+      {/* Overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`
+        fixed md:static top-0 left-0
+        h-screen
+        w-72
+        bg-gradient-to-b
+        from-pink-500
+        via-pink-600
+        to-purple-700
+        text-white
+        shadow-2xl
+        z-50
+        transform
+        transition-all
+        duration-300
+        ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }
+        md:translate-x-0
+      `}
+      >
+        <div className="flex justify-between items-center p-6 border-b border-pink-300/30">
+          <div>
+            <h1 className="text-2xl font-bold">
+              💄 Shree Beauty
+            </h1>
+
+            <p className="text-pink-100 text-sm">
+              Admin Dashboard
+            </p>
+          </div>
+
+          <button
+            onClick={() => setOpen(false)}
+            className="md:hidden"
+          >
+            <X />
+          </button>
+        </div>
+
+        <nav className="mt-8 px-4">
+
+          {menus.map((menu) => (
+            <Link
+              key={menu.path}
+              to={menu.path}
+              onClick={() => setOpen(false)}
+              className={`flex items-center gap-4 px-5 py-4 rounded-2xl mb-3 transition-all duration-300
+
+              ${
+                location.pathname === menu.path
+                  ? "bg-white text-pink-600 shadow-xl scale-105"
+                  : "hover:bg-white/20 hover:translate-x-2"
+              }`}
+            >
+              {menu.icon}
+
+              <span className="font-medium">
+                {menu.name}
+              </span>
+            </Link>
+          ))}
+
+        </nav>
+
+        <div className="absolute bottom-5 w-full px-5">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 text-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+              className="w-16 h-16 rounded-full mx-auto mb-3"
+            />
+
+            <h2 className="font-semibold">
+              Beauty Parlour
+            </h2>
+
+            <p className="text-sm text-pink-100">
+              Admin Panel
+            </p>
+          </div>
+        </div>
+      </aside>
+    </>
+  );
 }
 
 export default Sidebar
