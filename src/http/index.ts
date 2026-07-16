@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://shree-beauty-parlour-six.vercel.app//api",
+  baseURL: "http://localhost:3000/api",
 });
 
 const APIWITHTOKEN = axios.create({
-  baseURL: "https://shree-beauty-parlour-six.vercel.app//api",
+  baseURL: "http://localhost:3000/api",
 });
 
 APIWITHTOKEN.interceptors.request.use((config) => {
