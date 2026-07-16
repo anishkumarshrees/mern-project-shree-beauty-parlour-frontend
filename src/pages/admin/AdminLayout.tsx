@@ -2,17 +2,22 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/sidebar/Sidebar";
 
-
 function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-100dvh bg-gray-100 overflow-hidden">
+    <div className="flex h-[100dvh] bg-gray-100 overflow-hidden">
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+          className="
+          fixed inset-0
+          bg-black/50
+          backdrop-blur-sm
+          z-40
+          md:hidden
+          "
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -26,7 +31,8 @@ function AdminLayout() {
           z-50
           h-full
           w-72
-          bg-linear-to-b from-gray-900 to-gray-800
+          shrink-0
+          bg-gradient-to-b from-gray-950 to-gray-800
           shadow-xl
           transition-transform duration-300 ease-in-out
 
@@ -38,8 +44,18 @@ function AdminLayout() {
         `}
       >
 
-        {/* Logo Section */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-gray-700">
+        {/* Logo */}
+        <div
+          className="
+          h-16
+          flex
+          items-center
+          justify-between
+          px-5
+          border-b
+          border-gray-700
+          "
+        >
 
           <div>
             <h1 className="text-white text-lg font-bold">
@@ -52,10 +68,13 @@ function AdminLayout() {
           </div>
 
 
-          {/* Mobile Close */}
           <button
             onClick={() => setSidebarOpen(false)}
-            className="md:hidden text-gray-300 text-xl"
+            className="
+            md:hidden
+            text-gray-300
+            text-xl
+            "
           >
             ✕
           </button>
@@ -63,15 +82,18 @@ function AdminLayout() {
         </div>
 
 
-        {/* Sidebar Menu */}
-        <Sidebar />
+        {/* Sidebar */}
+        <div className="h-[calc(100dvh-64px)] overflow-y-auto">
+          <Sidebar />
+        </div>
+
 
       </aside>
 
 
 
-      {/* Main Area */}
-      <div className="flex flex-col flex-1">
+      {/* Right Section */}
+      <div className="flex flex-col flex-1 min-w-0">
 
 
         {/* Navbar */}
@@ -83,32 +105,38 @@ function AdminLayout() {
           flex
           items-center
           justify-between
-          px-4 md:px-6
+          px-4
+          md:px-6
           shadow-sm
           "
         >
 
+
           <div className="flex items-center gap-4">
 
 
-            {/* Hamburger */}
+            {/* Mobile Menu */}
             <button
-              className="md:hidden"
+              className="
+              md:hidden
+              p-2
+              rounded-lg
+              hover:bg-gray-100
+              "
               onClick={() => setSidebarOpen(true)}
             >
 
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 className="w-7 h-7 text-gray-700"
                 fill="none"
-                viewBox="0 0 24 24"
                 stroke="currentColor"
+                viewBox="0 0 24 24"
               >
 
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h16"
                 />
 
@@ -126,7 +154,6 @@ function AdminLayout() {
               <p className="text-xs text-gray-500 hidden sm:block">
                 Manage your beauty parlour
               </p>
-
             </div>
 
 
@@ -134,41 +161,37 @@ function AdminLayout() {
 
 
 
-
-          {/* Right Side */}
-          <div className="flex items-center gap-4">
+          {/* Right */}
+          <div className="flex items-center gap-3">
 
 
             {/* Search */}
-            <div className="hidden md:block relative">
-
-              <input
-                type="text"
-                placeholder="Search..."
-                className="
-                w-64
-                rounded-xl
-                border
-                px-4
-                py-2
-                text-sm
-                outline-none
-                focus:ring-2
-                focus:ring-pink-400
-                "
-              />
-
-            </div>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="
+              hidden
+              lg:block
+              w-64
+              rounded-xl
+              border
+              px-4
+              py-2
+              text-sm
+              outline-none
+              focus:ring-2
+              focus:ring-pink-400
+              "
+            />
 
 
 
-            {/* Admin Profile */}
+            {/* Profile */}
             <div
               className="
               flex
               items-center
               gap-2
-              cursor-pointer
               "
             >
 
@@ -193,7 +216,6 @@ function AdminLayout() {
                 Admin
               </span>
 
-
             </div>
 
 
@@ -204,12 +226,13 @@ function AdminLayout() {
 
 
 
-        {/* Content */}
+        {/* Page Content */}
         <main
           className="
           flex-1
           overflow-y-auto
-          p-4
+          p-3
+          sm:p-4
           md:p-6
           "
         >
